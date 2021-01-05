@@ -4,4 +4,8 @@ sub_2
 ================
 
 
-blocks are...
+blocks are...stuff
+
+input 
+
+output
