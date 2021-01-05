@@ -6,7 +6,8 @@ Blocks
    :maxdepth: 2
    :caption: Contents:
    
-   Blocks/e_Calc/
+   Blocks/e_Calc/alu
+   Blocks/e_Calc/e_add
  
 
  
