@@ -1,6 +1,6 @@
 .. blocks here's info about blocks
 
-Blocks
+What are Blocks?
 ======
 .. toctree::
    :maxdepth: 2
@@ -10,4 +10,4 @@ Blocks
 
  
 
-Blocks are objects used in patch to create audio.
+Blocks are objects used in patch to create audio. yo yo yo

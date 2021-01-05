@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
-sub_2
+e_add
 ================
 
 
-blocks are...
+the e_add blocks is...
