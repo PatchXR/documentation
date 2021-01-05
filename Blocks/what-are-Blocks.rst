@@ -6,11 +6,8 @@ Blocks
    :maxdepth: 2
    :caption: Contents:
    
-   Blocks/what-are-Blocks
-   Blocks/e_Calc/alu
-   Blocks/e_Calc/e_add
  
 
  
 
-Blocks are...
+Blocks are objects used in patch to create audio.
