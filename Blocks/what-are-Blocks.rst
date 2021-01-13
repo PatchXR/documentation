@@ -10,4 +10,5 @@ What are Blocks?
 
  
 
-Blocks are objects used in patch to create audio. yo yo yo
+Blocks are objects used in the Patch Virtual Reality space that the player can use to create sounds.
+Patch is a DAW (Digital Audio Workspace) that enables users to create devices in virtual reality that can create audio, and be programmed automatically or manipulated manually to make music.
