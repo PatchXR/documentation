@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
 What are Blocks?
-======
+========================
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

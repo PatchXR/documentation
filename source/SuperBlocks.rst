@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
-pass
-================
+SuperBlocks
+=======================
 
 
 blocks are...

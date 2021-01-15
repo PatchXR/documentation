@@ -2,6 +2,15 @@
 
 pass_out
 ================
+*Description*
+
+ 
+
+*Visual Notes*
 
 
-blocks are...
+*Input*
+
+*Output*
+
+*Related*

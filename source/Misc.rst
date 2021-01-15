@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
-floor
-================
+Misc
+=====
 
 
-WIP
+Misc blocks are...

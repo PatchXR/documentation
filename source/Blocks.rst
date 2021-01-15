@@ -7,10 +7,8 @@ Blocks
    :caption: Contents:
    
    Blocks/what-are-Blocks
-   Blocks/e_Calc/alu
-   Blocks/e_Calc/e_add
+   Blocks/e_Calc
  
 
- 
 
-Blocks are...
+Blocks listed here are currently integrated in Patch...
