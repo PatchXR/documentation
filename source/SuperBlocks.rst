@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
-Videos
-=====
+SuperBlocks
+=======================
 
 
 blocks are...

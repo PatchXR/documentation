@@ -3,12 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to PatchXR's documentation!
+Welcome to the Patch documentation!
 ===================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: Documentation Contents:
    
    Install 
    Blocks
@@ -28,18 +28,28 @@ Get Started
 .. code-block:: python
    :linenos:
 
-   import antigravity
+   import antigravity_python_example_code
+
+   def main():
+       antigravity.fly()testetsets
+
+.. code-block:: csharp
+   :linenos:
+
+   import antigravity_python_example_code
 
    def main():
        antigravity.fly()
+
+For more infomation about Patch, please see our website.
 
 
 
 FAQ
 ==================
-* :ref:`What is PatchXR?`
-* :ref:`What's this documentation for?`
-* :ref:`What do I need?`
+* :ref:`What is Patch?`
+www.google.com :ref:`What is this documentation for?`
+
 
 Other Resources
 

@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
-SuperBlocks
+Misc
 =====
 
 
-blocks are...
+Misc blocks are...
