@@ -36,7 +36,7 @@ Get Started
 .. code-block:: csharp
    :linenos:
 
-   import antigravity_python_example_code
+   import antigravity_python_example_code...
 
    def main():
        antigravity.fly()
@@ -48,7 +48,7 @@ For more infomation about Patch, please see our website.
 FAQ
 ==================
 * :ref:`What is Patch?`
-www.google.com :ref:`What is this documentation for?`
+* :ref:`What is this documentation for?`
 
 
 Other Resources
