@@ -7,5 +7,5 @@
    :caption: Contents:
    
    
-   2--G_buton\button
-   2--G_buton\button_Ben
+   2--G_buton/button
+   2--G_buton/button_Ben

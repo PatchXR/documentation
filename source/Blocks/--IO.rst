@@ -7,6 +7,6 @@
    :caption: Contents:
    
    
-   --IO\ableton_link
-   --IO\mic
-   --IO\microphone
+   --IO/ableton_link
+   --IO/mic
+   --IO/microphone

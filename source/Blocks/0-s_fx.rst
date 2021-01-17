@@ -7,4 +7,4 @@
    :caption: Contents:
    
    
-   0-s_fx\wavefolder
+   0-s_fx/wavefolder

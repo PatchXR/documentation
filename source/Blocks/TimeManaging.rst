@@ -7,5 +7,5 @@ TimeManaging
    :caption: Contents:
    
    
-   TimeManaging\phasor
-   TimeManaging\timecontrol
+   TimeManaging/phasor
+   TimeManaging/timecontrol

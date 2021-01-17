@@ -7,4 +7,4 @@ Visuals
    :caption: Contents:
    
    
-   Visuals\pencil
+   Visuals/pencil

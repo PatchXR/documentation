@@ -7,5 +7,5 @@
    :caption: Contents:
    
    
-   0---Speaker\speaker
-   0---Speaker\speaker_2D
+   0---Speaker/speaker
+   0---Speaker/speaker_2D

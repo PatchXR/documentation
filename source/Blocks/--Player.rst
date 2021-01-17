@@ -7,5 +7,5 @@
    :caption: Contents:
    
    
-   --Player\btn_side
-   --Player\vive_ctrl
+   --Player/btn_side
+   --Player/vive_ctrl

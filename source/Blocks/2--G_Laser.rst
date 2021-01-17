@@ -7,6 +7,6 @@
    :caption: Contents:
    
    
-   2--G_Laser\ball
-   2--G_Laser\laserboard
-   2--G_Laser\laserkey
+   2--G_Laser/ball
+   2--G_Laser/laserboard
+   2--G_Laser/laserkey

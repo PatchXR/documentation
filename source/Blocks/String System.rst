@@ -7,6 +7,6 @@ String System
    :caption: Contents:
    
    
-   String System\bow
-   String System\bow_physic
-   String System\e_string
+   String System/bow
+   String System/bow_physic
+   String System/e_string
