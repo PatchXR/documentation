@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
 --G_System
-======
+================================================
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

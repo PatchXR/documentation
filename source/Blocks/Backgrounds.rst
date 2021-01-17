@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
 Backgrounds
-======
+================================================
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

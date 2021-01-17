@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
 0--s_Calc
-======
+================================================
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

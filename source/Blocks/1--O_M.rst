@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
 1--O_M
-======
+================================================
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

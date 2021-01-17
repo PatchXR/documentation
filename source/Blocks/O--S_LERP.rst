@@ -1,7 +1,7 @@
 .. blocks here's info about blocks
 
 O--S_LERP
-======
+================================================
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
