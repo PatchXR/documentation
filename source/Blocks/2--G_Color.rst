@@ -7,6 +7,6 @@
    :caption: Contents:
    
    
-   2--G_Color\coloroven.rst
-   2--G_Color\lightbulb.rst
-   2--G_Color\sunlight.rst
+   2--G_Color\coloroven
+   2--G_Color\lightbulb
+   2--G_Color\sunlight

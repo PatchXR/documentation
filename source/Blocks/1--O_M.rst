@@ -7,19 +7,19 @@
    :caption: Contents:
    
    
-   1--O_M\box.rst
-   1--O_M\funnel.rst
-   1--O_M\marble.rst
-   1--O_M\MPathMarbel.1.rst
-   1--O_M\MPathMarbel.2.rst
-   1--O_M\MPathMarbel.3.rst
-   1--O_M\MPathMarbel.4.rst
-   1--O_M\m_add.rst
-   1--O_M\m_booster.rst
-   1--O_M\m_compare.rst
-   1--O_M\m_path.rst
-   1--O_M\m_reader.rst
-   1--O_M\m_spawner.rst
-   1--O_M\m_split.rst
-   1--O_M\m_switch.rst
-   1--O_M\wall.rst
+   1--O_M\box
+   1--O_M\funnel
+   1--O_M\marble
+   1--O_M\MPathMarbel.1
+   1--O_M\MPathMarbel.2
+   1--O_M\MPathMarbel.3
+   1--O_M\MPathMarbel.4
+   1--O_M\m_add
+   1--O_M\m_booster
+   1--O_M\m_compare
+   1--O_M\m_path
+   1--O_M\m_reader
+   1--O_M\m_spawner
+   1--O_M\m_split
+   1--O_M\m_switch
+   1--O_M\wall

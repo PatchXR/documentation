@@ -7,5 +7,5 @@ TimeManaging
    :caption: Contents:
    
    
-   TimeManaging\phasor.rst
-   TimeManaging\timecontrol.rst
+   TimeManaging\phasor
+   TimeManaging\timecontrol

@@ -7,17 +7,17 @@
    :caption: Contents:
    
    
-   1--e_Calc\alu.rst
-   1--e_Calc\e_add.rst
-   1--e_Calc\e_div.rst
-   1--e_Calc\e_log.rst
-   1--e_Calc\e_mul.rst
-   1--e_Calc\e_pow.rst
-   1--e_Calc\e_sub.rst
-   1--e_Calc\floor.rst
-   1--e_Calc\get.rst
-   1--e_Calc\mod.rst
-   1--e_Calc\mtof.rst
-   1--e_Calc\pass.rst
-   1--e_Calc\pass_in.rst
-   1--e_Calc\pass_out.rst
+   1--e_Calc\alu
+   1--e_Calc\e_add
+   1--e_Calc\e_div
+   1--e_Calc\e_log
+   1--e_Calc\e_mul
+   1--e_Calc\e_pow
+   1--e_Calc\e_sub
+   1--e_Calc\floor
+   1--e_Calc\get
+   1--e_Calc\mod
+   1--e_Calc\mtof
+   1--e_Calc\pass
+   1--e_Calc\pass_in
+   1--e_Calc\pass_out

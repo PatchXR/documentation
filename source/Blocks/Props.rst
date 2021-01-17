@@ -7,14 +7,14 @@ Props
    :caption: Contents:
    
    
-   Props\Cylinder.rst
-   Props\duck.rst
-   Props\prop_groundshadow.rst
-   Props\prop_highplatform.rst
-   Props\prop_neuron.rst
-   Props\prop_neurons.rst
-   Props\prop_platform.rst
-   Props\prop_swimmingpool.rst
-   Props\watersurface10.rst
-   Props\watersurface100.rst
-   Props\watersurface25.rst
+   Props\Cylinder
+   Props\duck
+   Props\prop_groundshadow
+   Props\prop_highplatform
+   Props\prop_neuron
+   Props\prop_neurons
+   Props\prop_platform
+   Props\prop_swimmingpool
+   Props\watersurface10
+   Props\watersurface100
+   Props\watersurface25
