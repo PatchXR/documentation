@@ -7,8 +7,8 @@
    :caption: Contents:
    
    
-2--G_bool\toggle.rst
-2--G_bool\toggleboard.rst
-2--G_bool\toggleboardcmd.rst
-2--G_bool\toggleboard_piece.rst
-2--G_bool\toggle_base.rst
+   2--G_bool\toggle.rst
+   2--G_bool\toggleboard.rst
+   2--G_bool\toggleboardcmd.rst
+   2--G_bool\toggleboard_piece.rst
+   2--G_bool\toggle_base.rst

@@ -7,4 +7,4 @@ Cases
    :caption: Contents:
    
    
-Cases\case_mantis_sound.rst
+   Cases\case_mantis_sound.rst

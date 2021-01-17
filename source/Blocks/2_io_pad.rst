@@ -7,5 +7,5 @@
    :caption: Contents:
    
    
-2_io_pad\pad_square.rst
-2_io_pad\pad_square_ben.rst
+   2_io_pad\pad_square.rst
+   2_io_pad\pad_square_ben.rst
