@@ -7,5 +7,3 @@ dirname
    :caption: Contents:
    
    
-TimeManaging\phasor.rst
-TimeManaging\timecontrol.rst

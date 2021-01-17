@@ -7,4 +7,3 @@ dirname
    :caption: Contents:
    
    
-Visuals\pencil.rst

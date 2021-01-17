@@ -7,6 +7,3 @@ dirname
    :caption: Contents:
    
    
-String System\bow.rst
-String System\bow_physic.rst
-String System\e_string.rst

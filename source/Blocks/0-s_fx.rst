@@ -7,4 +7,3 @@ dirname
    :caption: Contents:
    
    
-0-s_fx\wavefolder.rst

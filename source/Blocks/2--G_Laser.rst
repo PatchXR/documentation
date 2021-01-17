@@ -7,6 +7,3 @@ dirname
    :caption: Contents:
    
    
-2--G_Laser\ball.rst
-2--G_Laser\laserboard.rst
-2--G_Laser\laserkey.rst
