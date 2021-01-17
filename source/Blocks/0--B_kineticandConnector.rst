@@ -7,7 +7,7 @@
    :caption: Contents:
    
    
-   0--B_kineticandConnector\avatar_attach
+   B_kineticandConnector\avatar_attach
    0--B_kineticandConnector\avatar_attach_head
    0--B_kineticandConnector\controllerPosition
    0--B_kineticandConnector\controllerrotation
