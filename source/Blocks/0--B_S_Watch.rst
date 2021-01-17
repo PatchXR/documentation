@@ -1,6 +1,6 @@
 .. blocks here's info about blocks
 
-dirname
+0--B_S_Watch
 ======
 .. toctree::
    :maxdepth: 2

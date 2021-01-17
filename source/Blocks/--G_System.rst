@@ -1,6 +1,6 @@
 .. blocks here's info about blocks
 
-dirname
+--G_System
 ======
 .. toctree::
    :maxdepth: 2

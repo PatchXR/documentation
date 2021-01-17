@@ -1,6 +1,6 @@
 .. blocks here's info about blocks
 
-dirname
+0---Speaker
 ======
 .. toctree::
    :maxdepth: 2

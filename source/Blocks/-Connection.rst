@@ -1,6 +1,6 @@
 .. blocks here's info about blocks
 
-dirname
+-Connection
 ======
 .. toctree::
    :maxdepth: 2

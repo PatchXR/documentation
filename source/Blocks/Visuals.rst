@@ -1,9 +1,10 @@
 .. blocks here's info about blocks
 
-dirname
+Visuals
 ======
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
    
    
+Visuals\pencil.rst

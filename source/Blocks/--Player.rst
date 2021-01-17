@@ -1,6 +1,6 @@
 .. blocks here's info about blocks
 
-dirname
+--Player
 ======
 .. toctree::
    :maxdepth: 2

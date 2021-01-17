@@ -1,6 +1,6 @@
 .. blocks here's info about blocks
 
-dirname
+--IO
 ======
 .. toctree::
    :maxdepth: 2
