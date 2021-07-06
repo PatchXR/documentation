@@ -1,0 +1,7 @@
+bernoulli
+=========
+
+:Description:
+    
+
+:Inputs:
