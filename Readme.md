@@ -71,3 +71,58 @@ You can clean the files in the *source/Blocks/* directory with
 ```
 $ python build_rst_from_blocks_json.py --clean
 ```
+
+## Documentation Format
+
+Here is an example of the documentation for s_mul with added comments (even though JSON
+doesn't support comments)-
+
+```
+{
+    "name": "s_mul",    # The name of the block.
+    "menuPath": "Math", # The category of the block and where it will be placed in the printer/documentation.
+    "description": "Multiplies two streams and outputs the result (a * b)", # A longer description of what the block does and its outputs.
+    "examplePatch": "", # Name of the example patch, which shows how to use the block.
+    "blockType": 1,     # Legacy field from old documentation system, not used.
+    "active": true,     # True if the block should be available within the game.
+    "includeInWebDocumentation": true,  # True if the block should be included in the online documentation.
+    "parts": [      # List of info about all the inputs, outputs, and other parts of the block.
+        {
+            "name": "a",    #                   # The name of the part as shown to the user.
+            "description": "The first stream",  # A longer description of the part.
+            "type": "stream input",             # The type of the part. See next section for a list of accepted types.
+            "unityName": "a"                    # The name of the part within unity, do not change unless you know what you're doing.
+        },
+        {
+            "name": "b",
+            "description": "The second stream",
+            "type": "stream input",
+            "unityName": "b"
+        }
+    ],
+    "relatedBlocks": [  # List of blocks that the user might also be interested when reading about this block.
+        {
+            "name": "s_add" # The name of the related block
+        },
+                {
+            "name": "s_sub"
+        }
+    ]
+}
+```
+
+## Documentation Guidelines
+
+To ensure a consistent style in the documentation, please follow these guidelines.
+
+- All blocks, inputs, and outputs should be named with *under_scores*.
+- All block, input, output and other part descriptions should start with a 
+  captial letter and end on a period.
+- If a part has a type, use one of the standard types with correct casing (lowercase).
+  Please contact Pelle if you want to add another type. The standard types are:
+  - knob
+  - stream input
+  - event input
+  - event output
+- Do not change the name of a block. The name is the samed as the one used in unity and
+  in the .patch files, so changing the name requires editing stuff in the unity project.
