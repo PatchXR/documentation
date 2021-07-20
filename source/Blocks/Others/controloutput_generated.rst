@@ -1,7 +1,0 @@
-controloutput
-=============
-
-:Description:
-    
-
-:Inputs:

@@ -1,7 +1,0 @@
-pluck
-=====
-
-:Description:
-    
-
-:Inputs:

@@ -1,7 +1,0 @@
-mod
-===
-
-:Description:
-    Modulo
-
-:Inputs:

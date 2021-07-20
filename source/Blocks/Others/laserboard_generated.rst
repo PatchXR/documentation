@@ -1,7 +1,0 @@
-laserboard
-==========
-
-:Description:
-    
-
-:Inputs:

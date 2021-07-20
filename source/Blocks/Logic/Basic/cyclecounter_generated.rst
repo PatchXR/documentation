@@ -1,7 +1,0 @@
-cyclecounter
-============
-
-:Description:
-    
-
-:Inputs:

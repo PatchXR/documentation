@@ -1,7 +1,0 @@
-elbow
-=====
-
-:Description:
-    
-
-:Inputs:

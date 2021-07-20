@@ -1,7 +1,0 @@
-statevariable
-=============
-
-:Description:
-    
-
-:Inputs:

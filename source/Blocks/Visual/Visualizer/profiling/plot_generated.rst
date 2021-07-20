@@ -1,7 +1,0 @@
-plot
-====
-
-:Description:
-    
-
-:Inputs:

@@ -1,7 +1,0 @@
-hapticcontrol
-=============
-
-:Description:
-    
-
-:Inputs:

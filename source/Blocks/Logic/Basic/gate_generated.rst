@@ -1,7 +1,0 @@
-gate
-====
-
-:Description:
-    
-
-:Inputs:

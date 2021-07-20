@@ -18,21 +18,18 @@ args = parser.parse_args()
 blocksFolder = args.path
 verbose = args.verbose
 
-if args.clean:
-    if verbose:
-        print('Cleaning the Blocks folder')
-    
-    for root, dirs, files in os.walk('source/Blocks'):
-        if root != 'source/Blocks':
-            for f in files:
-                path = os.path.join(root, f)
+if verbose:
+    print(f'Checking if the given blocks folder {blocksFolder} exists')
 
-                if verbose:
-                    print(f'Removing {path}')
+# Check if the given path exists
+if not os.path.exists(blocksFolder):
+    print(f'Error: the given path to the Blocks folder ({blocksFolder}) could not be found. \n\nPlease check if the documentation and NewPatch repositories reside in the same folder. Alternatively, supply the correct path using the --path PATH command line option.')
 
-                os.remove(path)
+if verbose:
+    print('Cleaning the Blocks folder')
 
-    for root, dirs, files in os.walk('source/Blocks'):
+for root, dirs, files in os.walk('source/Blocks'):
+    if root != 'source/Blocks':
         for f in files:
             path = os.path.join(root, f)
 
@@ -41,19 +38,20 @@ if args.clean:
 
             os.remove(path)
 
-        if root != 'source/Blocks':
-            if verbose:
-                print(f'Removing directory {root}')
+for root, dirs, files in os.walk('source/Blocks'):
+    for f in files:
+        path = os.path.join(root, f)
 
-            shutil.rmtree(root)
-    exit(0)
+        if verbose:
+            print(f'Removing {path}')
 
-if verbose:
-    print(f'Checking if the given blocks folder {blocksFolder} exists')
+        os.remove(path)
 
-# Check if the given path exists
-if not os.path.exists(blocksFolder):
-    print(f'Error: the given path to the Blocks folder ({blocksFolder}) could not be found. \n\nPlease check if the documentation and NewPatch repositories reside in the same folder. Alternatively, supply the correct path using the --path PATH command line option.')
+    if root != 'source/Blocks':
+        if verbose:
+            print(f'Removing directory {root}')
+
+        shutil.rmtree(root)
 
 # Reads and parses the given file from JSON into a dictionary
 def readAndParseBlockJson(path):
@@ -96,16 +94,28 @@ def generateRstDocumentationForBlock(block):
     # Title
     result += block['name'] + '\n'
     result += ''.join(['=' for c in block['name']]) + '\n\n'
+    result += f'.. _{block["name"]}:\n\n'
 
     # Description
-    result += ':Description:\n'
-    result += '    ' + block['description'] + '\n\n'
+    result += '**Description**\n\n'
+    result += block['description'] + '\n\n'
 
     # Inputs
-    result += ':Inputs:\n'
+    result += '**Inputs, output and other parts**\n\n'
     
-    for input in block['inputs']:
-        result += f'    *{input["name"]}* {input["description"]}\n\n'
+    for part in block['parts']:
+        typeString = f' ({part["type"]})' if part['type'] != "" else ""
+        result += f'*{part["name"]}*{typeString} {part["description"]}\n\n'
+
+    relatedBlocks = block['relatedBlocks']
+        
+    if len(relatedBlocks) > 0:
+        result += '**See also:**\n\n'
+
+        relatedBlockNames = [b['name'] for b in relatedBlocks]
+        relatedBlockLinks = [f':ref:`{n} <{n}>`' for n in relatedBlockNames]
+
+        result += ', '.join(relatedBlockLinks) + "\n\n"
 
     return result
 
@@ -121,16 +131,17 @@ for block in blocks:
     if verbose:
         print(f'Generating documentation for {block["name"]}')
 
-    rst = generateRstDocumentationForBlock(block)
+    if block['includeInWebDocumentation']:
+        rst = generateRstDocumentationForBlock(block)
 
-    dir = os.path.join('source/Blocks/', block['menuPath'])
+        dir = os.path.join('source/Blocks/', block['menuPath'])
 
-    pathlib.Path(dir).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(dir).mkdir(parents=True, exist_ok=True)
 
-    path = os.path.join(dir, block['name'] + '_generated.rst')
+        path = os.path.join(dir, block['name'] + '_generated.rst')
 
-    with open(path, 'w') as f:
-        f.write(rst)
+        with open(path, 'w') as f:
+            f.write(rst)
 
 if verbose:
     print(f'Reading Blocks.rst template')

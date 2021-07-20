@@ -1,7 +1,0 @@
-cycledispatch
-=============
-
-:Description:
-    
-
-:Inputs:

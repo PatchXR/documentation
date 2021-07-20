@@ -1,7 +1,0 @@
-sliderDb
-========
-
-:Description:
-    
-
-:Inputs:
