@@ -5,15 +5,15 @@ sequence
 
 **Description**
 
-
+Routes an incoming jolt to one of many outputs.
 
 **Inputs, output and other parts**
 
-*s_IN* 
+*output_select* (stream input) Selects which output the incoming jolt will be routed to.
 
-*esReciver_MainReciver_n_gate* 
+*pull* (interactive) Pull to set the number of output gates.
 
-*PULL* 
+*input* The jolt which will be routed to the selected output.
 
-*dispatch_emitter(Clone)* 
+*output* (jolt output) One of the possible outputs the input may be routed to.
 

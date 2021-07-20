@@ -5,15 +5,15 @@ sequence_loop
 
 **Description**
 
-
+Routes an incoming jolt to one of many outputs in a looping manner.
 
 **Inputs, output and other parts**
 
-*eR_hot* 
+*input* (jolt input) The jolt which will be routed to the currently selected output and proceed to the next output.
 
-*PULL* 
+*pull* (interactive) Pull to set the number of output gates.
 
-*`IN_Set_n_gate* 
+*select_output* (jolt input) Select which output should be used next time an input is received.
 
-*dispatch_emitter(Clone)* 
+*output* (jolt output) One of the possible outputs the input may be routed to.
 
