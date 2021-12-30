@@ -1,7 +1,7 @@
-marbleSlide
+marbleslide
 ===========
 
-.. _marbleSlide:
+.. _marbleslide:
 
 **Description**
 

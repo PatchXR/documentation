@@ -1,7 +1,7 @@
-karpus_strong
-=============
+karplus_strong
+==============
 
-.. _karpus_strong:
+.. _karplus_strong:
 
 **Description**
 

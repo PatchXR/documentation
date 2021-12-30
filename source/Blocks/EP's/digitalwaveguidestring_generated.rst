@@ -1,7 +1,7 @@
-digitalWaveguideString
+digitalwaveguidestring
 ======================
 
-.. _digitalWaveguideString:
+.. _digitalwaveguidestring:
 
 **Description**
 

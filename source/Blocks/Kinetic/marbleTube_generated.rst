@@ -1,7 +1,7 @@
-marbleTube
+marbletube
 ==========
 
-.. _marbleTube:
+.. _marbletube:
 
 **Description**
 

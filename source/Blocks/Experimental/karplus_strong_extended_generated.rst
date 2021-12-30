@@ -1,7 +1,7 @@
-karpus_strong_extended
-======================
+karplus_strong_extended
+=======================
 
-.. _karpus_strong_extended:
+.. _karplus_strong_extended:
 
 **Description**
 
