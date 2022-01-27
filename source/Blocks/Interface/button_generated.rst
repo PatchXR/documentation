@@ -5,7 +5,9 @@ button
 
 **Description**
 
-Press the button - triggers a jolt of any input stream value when activated.
+Press the button to emit a Jolt.
+
+Buttons are one of the basic blocks used to trigger stuff in your world. You can e.g. wire a the output of a button to the 'play' input of a sample to trigger playback of that sample.
 
 **Inputs, output and other parts**
 
@@ -13,7 +15,7 @@ Press the button - triggers a jolt of any input stream value when activated.
 
 *Button* Button
 
-*es_emiiter* Emits jolt of active value
+*Emitter* Emits jolt of active value
 
 *e_I* Jolt input
 

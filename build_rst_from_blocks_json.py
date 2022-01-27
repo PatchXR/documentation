@@ -100,6 +100,9 @@ def generateRstDocumentationForBlock(block):
     result += '**Description**\n\n'
     result += block['description'] + '\n\n'
 
+    if 'longDescription' in block:
+        result += block['longDescription'] + '\n\n'
+
     # Inputs
     result += '**Inputs, output and other parts**\n\n'
     
