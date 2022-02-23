@@ -5,11 +5,15 @@ power
 
 **Description**
 
-Calculates input of a stream to the power of second input
+Calculates stream value A to the power of stream value B
 
 **Inputs, output and other parts**
 
-*s_IN_0*  a
+*A* (stream input) Base value A
 
-*s_IN_1*  b
+*B* (stream input) Exponent value B
+
+**See also:**
+
+:ref:`log <log>`, :ref:`power_jolt <power_jolt>`
 

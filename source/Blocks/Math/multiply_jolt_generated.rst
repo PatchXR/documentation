@@ -5,13 +5,17 @@ multiply_jolt
 
 **Description**
 
-Calculates multiplication of two inputs.
+Calculates multiplication of the jolt value with the stream value and outputs the result as jolt.
 
 **Inputs, output and other parts**
 
-*s_IN* Stream input
+*Multiplier* (stream input) Sets the value with which the jolt input value will be multiplied (without triggering the output).
 
-*Emmiter* Emits calculated value as jolt output
+*Result* (jolt output) Emits calculated value as jolt.
 
-*eR_hot* Jolt input
+*Calculate* (jolt input) Receives value which will be multiplied with the stream value, triggers the calculation.
+
+**See also:**
+
+:ref:`divide_jolt <divide_jolt>`, :ref:`add_jolt <add_jolt>`, :ref:`subtract_jolt <subtract_jolt>`, :ref:`multiply <multiply>`
 

@@ -17,7 +17,3 @@ Adds reverberation to a stream using a feedback delay network algorithm.
 
 *mix* (stream input) Controls the dry/wet mix of the output.
 
-**See also:**
-
-:ref:`reverb_tank <reverb_tank>`
-

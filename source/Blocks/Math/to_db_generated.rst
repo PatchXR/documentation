@@ -5,11 +5,15 @@ to_db
 
 **Description**
 
-Converts a from amplitude to dB
+Converts from amplitude to dB
 
 **Inputs, output and other parts**
 
 *s_IN_0*  a
 
-*s_IN* 
+*Input* (stream input) Amplitude value which will be converted to dB.
+
+**See also:**
+
+:ref:`from_db <from_db>`
 

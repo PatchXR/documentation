@@ -9,7 +9,7 @@ Passes an event from a jolt input to jolt output without modification.
 
 **Inputs, output and other parts**
 
-*eR_hot* Jolt input
+*Input* (jolt input) Jolt input to be emitted from output.
 
-*Emitter* Emits jolt
+*Output* (jolt output) Emits the received jolt.
 

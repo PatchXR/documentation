@@ -5,11 +5,15 @@ max
 
 **Description**
 
-Returns the highest of the two incoming values.
+Returns the highest of the two (A and B) incoming stream values.
 
 **Inputs, output and other parts**
 
-*s_IN_0*  a
+*A* (stream input) Value A
 
-*s_IN_1*  b
+*B* (stream input) Value B
+
+**See also:**
+
+:ref:`min <min>`
 

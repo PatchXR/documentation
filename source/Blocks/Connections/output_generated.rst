@@ -7,6 +7,8 @@ output
 
 Sends sound signal from Patch to the currently active audio output.
 
+
+
 **Inputs, output and other parts**
 
 *input* Audio stream input.

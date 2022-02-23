@@ -5,17 +5,21 @@ button
 
 **Description**
 
-Press the button to emit a Jolt.
+Pressing the button will emit a number out of the output, number can be set by the stream input.
 
 Buttons are one of the basic blocks used to trigger stuff in your world. You can e.g. wire a the output of a button to the 'play' input of a sample to trigger playback of that sample.
 
 **Inputs, output and other parts**
 
-*s_IN* Stream input; sets the value the button will send
+*Value* (stream input) Sets the number value that the ouput will emit.
 
-*Button* Button
+*Button* (interactive) Triggers the output to emit the set number value.
 
-*Emitter* Emits jolt of active value
+*Output* (jolt output) Emits the number value.
 
-*e_I* Jolt input
+*Trigger* (jolt input) Triggers the output to emit the set number value.
+
+**See also:**
+
+:ref:`slider <slider>`, :ref:`knob <knob>`
 

@@ -5,11 +5,15 @@ log
 
 **Description**
 
-Returns the logarithm of a to the base of b.
+Returns the logarithm of value A to the base of B value.
 
 **Inputs, output and other parts**
 
-*s_IN_0*  a
+*A* (stream input) Logarithm value A.
 
-*s_IN_1*  b
+*B* (stream input) Logarithm base value B.
+
+**See also:**
+
+:ref:`power <power>`, :ref:`log_jolt <log_jolt>`
 

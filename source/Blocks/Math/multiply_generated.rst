@@ -5,15 +5,15 @@ multiply
 
 **Description**
 
-Multiplies two streams and outputs the result (a * b)
+Multiplies two numbers and outputs the result using a simple A * B math operation.
 
 **Inputs, output and other parts**
 
-*a* (stream input) The first stream
+*A* (stream input) The first value, multiplied with B.
 
-*b* (stream input) The second stream
+*B* (stream input) The second value, multiplied with A.
 
 **See also:**
 
-:ref:`s_add <s_add>`
+:ref:`divide <divide>`, :ref:`add <add>`, :ref:`subtract <subtract>`, :ref:`multiply_jolt <multiply_jolt>`
 

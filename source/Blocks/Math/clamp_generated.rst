@@ -5,13 +5,17 @@ clamp
 
 **Description**
 
-Clamps a value inside a specified range - meaning, input is truncated to minimum or maximum of out of range
+Clamps a value inside a specified range - meaning, input is truncated within the range from set minimum to set maximum.
 
 **Inputs, output and other parts**
 
-*s_IN* Stream input
+*Input* (stream input) Value to be clamped within the range.
 
-*s_IN_min* Stream input minimum
+*Range minimum* (stream input) Minimum of the clamp range
 
-*s_IN_max* Stream input maximum
+*Range maximum* (stream input) Maximum of the clamp range.
+
+**See also:**
+
+:ref:`map <map>`, :ref:`rtou <rtou>`, :ref:`utor <utor>`
 

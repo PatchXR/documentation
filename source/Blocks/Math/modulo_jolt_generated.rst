@@ -5,15 +5,19 @@ modulo_jolt
 
 **Description**
 
-Modulo
+Returns the remainder after dividing jolt by stream input value.
 
 **Inputs, output and other parts**
 
-*s_IN_1_cold Variant* 
+*Divisor* (stream input) Sets the value by which the jolt will be divided (without triggering the output).
 
-*eR_hot* 
+*Calculate* (jolt input) Receives value which will be divided by stream input value, triggers the calculation.
 
-*Emmiter* 
+*Result* (jolt output) Emits calculated remainder value as jolt.
 
 *toggle* 
+
+**See also:**
+
+:ref:`floor_jolt <floor_jolt>`, :ref:`divide_jolt <divide_jolt>`, :ref:`modulo <modulo>`
 

@@ -5,11 +5,13 @@ floor
 
 **Description**
 
-Calculates floor of an input value, rounding to nearest integer
+Rounds input float numbers down to their nearest integer values (i.e. 5.9 will output 5).
 
 **Inputs, output and other parts**
 
-*eR_main* Jolt input
+*Input* (stream input) The number that will be rounded down to the nearest whole number.
 
-*emitter* Emits calculated value as jolt output
+**See also:**
+
+:ref:`round <round>`, :ref:`modulo <modulo>`, :ref:`floor_jolt <floor_jolt>`
 

@@ -5,11 +5,15 @@ min
 
 **Description**
 
-Returns the lowest of the two incoming values.
+Returns the lowest of the two (A and B) incoming values.
 
 **Inputs, output and other parts**
 
-*s_IN_0*  a
+*A* (stream input) Value A
 
-*s_IN_1*  b
+*B* (stream input) Value B
+
+**See also:**
+
+:ref:`max <max>`
 
