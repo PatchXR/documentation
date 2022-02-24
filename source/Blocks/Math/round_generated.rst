@@ -5,11 +5,15 @@ round
 
 **Description**
 
-Rounds incoming value to the nearest number
+Rounds incoming number with decimal value to the nearest whole number.
 
 **Inputs, output and other parts**
 
 *s_IN_0*  a
 
-*s_IN* 
+*Input* (stream input) The number that will be rounded to the nearest whole number.
+
+**See also:**
+
+:ref:`floor <floor>`, :ref:`modulo <modulo>`
 

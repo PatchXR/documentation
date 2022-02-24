@@ -5,11 +5,13 @@ abs
 
 **Description**
 
-Calculates absolute value of an incoming signal
+Calculates and outputs absolute value of an incoming signal. Any negative number will become positive. Examples: -8 will output 8. -12.3 will output a 12.3
 
 **Inputs, output and other parts**
 
-*s_IN_0*  a
+*Number* (stream input) Outputs absolute (non-negative) value of given number
 
-*s_IN* Stream input
+**See also:**
+
+:ref:`round <round>`
 

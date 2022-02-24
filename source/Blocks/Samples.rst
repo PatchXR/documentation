@@ -2,7 +2,7 @@
 .. subfolders of source/Blocks.
 
 Samples
-======
+============
 .. toctree::
    :glob:
    :titlesonly:

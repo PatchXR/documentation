@@ -5,15 +5,19 @@ subtract_jolt
 
 **Description**
 
-Subtracts second input from first input.
+Subtracts stream number from jolt input and outputs the result as jolt.
 
 **Inputs, output and other parts**
 
-*s_IN_1_cold Variant* Stream input
+*Subtract* (stream input) Sets the value to be subtracted from the jolt input value (without triggering the output).
 
-*eR_hot* Jolt input
+*Calculate* (jolt input) Receives value from which the stream value will be subtracted, triggers the calculation.
 
-*Emmiter* Emits calculated value as jolt output
+*Result* (jolt output) Emits results of subtracting stream value from jolt value on each received jolt.
 
 *toggle* Toggle
+
+**See also:**
+
+:ref:`add_jolt <add_jolt>`, :ref:`multiply_jolt <multiply_jolt>`, :ref:`divide_jolt <divide_jolt>`, :ref:`subtract <subtract>`
 

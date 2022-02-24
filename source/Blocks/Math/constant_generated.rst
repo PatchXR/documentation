@@ -6,7 +6,7 @@ constant
 **Description**
 
 Outputs various useful math constants:
-pi: the trigonimic constant.
+pi: the trigonometric constant
 sr: sample rate
 sp: sample period
 e: Euler's constant
@@ -15,9 +15,9 @@ bp: beat period (sec. pr. beat).
 
 **Inputs, output and other parts**
 
-*output* (event output) Will send the value of the constant whenever it changes or a jolt is received.
+*Output* (jolt output) Emits the value of the selected constant whenever it changes or a jolt is received.
 
-*constant* (knob) Select which constant to output.
+*Constant* (knob) Selects which constant to output.
 
-*trigger* (event input) Causes the output to send a jolt with the chosen constant value when a jolt is received.
+*Trigger* (jolt input) Triggers the output to emit the selected constant.
 

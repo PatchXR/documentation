@@ -5,15 +5,19 @@ power_jolt
 
 **Description**
 
-Calculates input to the power of second input
+Calculates jolt input to the power of stream input.
 
 **Inputs, output and other parts**
 
-*s_IN_1_cold Variant* Stream input
+*Exponent* (stream input) Sets the exponent value (without triggering the output).
 
-*eR_hot* Jolt input
+*Calculate* (jolt input) Receives value which will be raised to the power of stream input, triggers the calculation.
 
 *toggle* Toggle
 
-*Emmiter* Emits calculated value as jolt output
+*Result* (jolt output) Emits calculated value as jolt.
+
+**See also:**
+
+:ref:`logarithm_jolt <logarithm_jolt>`, :ref:`power <power>`
 

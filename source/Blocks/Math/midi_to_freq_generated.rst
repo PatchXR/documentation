@@ -5,9 +5,13 @@ midi_to_freq
 
 **Description**
 
-Converts MIDI (0-127) notes to frequency (Hz).
+Converts MIDI note number (0-127) to correnspoding frequency (Hz). E.g. 69 is A5 (440Hz) and 60 is C4 (261.63Hz).
 
 **Inputs, output and other parts**
 
-*midi_note* (stream input) To stream of midi note values (0-127) to convert. E.g. 69 is A5 (440Hz) and 60 is C4 (261.63Hz).
+*MIDI note* (stream input) MIDI note value (0-127) to convert.
+
+**See also:**
+
+:ref:`midi_to_freq_jolt <midi_to_freq_jolt>`
 

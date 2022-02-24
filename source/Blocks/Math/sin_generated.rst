@@ -5,11 +5,15 @@ sin
 
 **Description**
 
-Sinusoid of a
+Calculates sine value of A
 
 **Inputs, output and other parts**
 
 *s_IN_0*  a
 
-*s_IN* 
+*A* (stream input) Value for which the sine will be calculated.
+
+**See also:**
+
+:ref:`cos <cos>`
 

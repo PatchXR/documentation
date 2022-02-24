@@ -2,7 +2,7 @@
 .. subfolders of source/Blocks.
 
 Interface
-======
+============
 .. toctree::
    :glob:
    :titlesonly:

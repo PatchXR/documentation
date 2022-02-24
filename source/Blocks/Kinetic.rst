@@ -2,7 +2,7 @@
 .. subfolders of source/Blocks.
 
 Kinetic
-======
+==================
 .. toctree::
    :glob:
    :titlesonly:

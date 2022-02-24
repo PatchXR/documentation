@@ -5,11 +5,15 @@ modulo
 
 **Description**
 
-Returns the remainder after dividing a by b.
+Returns the remainder after dividing stream A by stream B.
 
 **Inputs, output and other parts**
 
-*s_IN_0*  a
+*A* (stream input) Dividen value.
 
-*s_IN_1*  b
+*B* (stream input) Divisor value.
+
+**See also:**
+
+:ref:`round <round>`, :ref:`floor <floor>`, :ref:`divide <divide>`, :ref:`modulo_jolt <modulo_jolt>`
 

@@ -5,11 +5,15 @@ midi_to_freq_jolt
 
 **Description**
 
-Convert a MIDI note number (0-127) to frequency (Hz).
+Converts MIDI note number (0-127) jolt to correnspoding frequency (Hz) jolt. E.g. 69 is A5 (440Hz) and 60 is C4 (261.63Hz).
 
 **Inputs, output and other parts**
 
-*Note input* (jolt input) Expects a jolt with a value of MIDI note to convert.
+*MIDI note input* (jolt input) Receives a jolt with value of MIDI note to convert.
 
-*Output* (jolt output) The frequency of the note received through 'Note input'.
+*Output* (jolt output) Emits jolt with calculated note frequency.
+
+**See also:**
+
+:ref:`midi_to_freq <midi_to_freq>`
 

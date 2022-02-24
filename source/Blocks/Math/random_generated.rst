@@ -5,15 +5,19 @@ random
 
 **Description**
 
-Outputs a random decimal between 0 and (a).
+Outputs a random decimal number between 0 and <b>Max</b>.
 
 **Inputs, output and other parts**
 
-*btn_dbug*  push 
+*Button* (interactive) Triggers the output to emit a new random value.
 
-*knob*  value to send
+*Max random value* (interactive) Sets random max value.
 
-*eR_hot*  (a)
+*Calculate* (jolt input) Send a jolt value to this input to trigger this block to emit a new random value. The value of the jolt will determine the maximum value of the random number.
 
-*emitter* 
+*Output* (jolt output) Emits random value.
+
+**See also:**
+
+:ref:`noise <noise>`, :ref:`pink_noise <pink_noise>`
 

@@ -2,7 +2,7 @@
 .. subfolders of source/Blocks.
 
 Donotinclude
-======
+==================
 .. toctree::
    :glob:
    :titlesonly:

@@ -2,7 +2,7 @@
 .. subfolders of source/Blocks.
 
 Deprecated
-======
+============
 .. toctree::
    :glob:
    :titlesonly:
