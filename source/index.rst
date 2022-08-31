@@ -32,4 +32,4 @@ Other Resources
 ==================
 
 Find us on `Discord <https://discord.gg/QHCRhNS5je>`_
-Find us on the `PatchWorld Forum <https://dforum.patchxr.com>`_
+Find us on the `PatchWorld Forum <https://forum.patchxr.com>`_
