@@ -29,7 +29,7 @@ For more infomation about Patch, please see our website. www.patchxr.com
  
 
 Other Resources
-
 ==================
+
 Find us on `Discord <https://discord.gg/QHCRhNS5je>`_`
 Find us on the forum: forum.patchxr.com/
