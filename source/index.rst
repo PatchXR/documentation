@@ -21,37 +21,15 @@ Welcome to the Patch documentation!
 Get Started
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+ 
 
-.. code-block:: python
-   :linenos:
-
-   import antigravity_python_example_code
-
-   def main():
-       antigravity.fly()testetsets
-
-.. code-block:: csharp
-   :linenos:
-
-   import antigravity_python_example_code
-
-   def main():
-       antigravity.fly()
-
-For more infomation about Patch, please see our website.
+For more infomation about Patch, please see our website. www.patchxr.com
 
 
-
-FAQ
-==================
-* :ref:`What is Patch?`
-www.google.com :ref:`What is this documentation for?`
-
+ 
 
 Other Resources
 
 ==================
-* :ref:`patchxr.com`
+Find us on `Discord <https://discord.gg/QHCRhNS5je>`_`
+Find us on the forum: forum.patchxr.com/
