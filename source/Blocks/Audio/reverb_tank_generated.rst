@@ -9,11 +9,15 @@ Applies reverb to the incoming signal.
 
 **Inputs, output and other parts**
 
-*input* (stream input) The stream to apply reverb to.
+*Signal input* (stream input) The stream to apply reverb to.
 
-*decay_time* (stream input) How long it should take for the sound to die out in seconds.
+*decay_time* (stream input) Controls how long it takes for the sound to die out (in seconds).
 
-*absorb* (stream input) A stream value between zero and one that controls how fast the high frequencies die out.
+*Absorption* (stream input) Controls the decay time of the reverbs high frequencies. (0-1)
 
-*mix* (stream input) Controls the dry/wet mix of the output.
+*Mix* (stream input) Controls the dry/wet mix of the output.
+
+**See also:**
+
+:ref:`reverb <reverb>`, :ref:`delay <delay>`
 

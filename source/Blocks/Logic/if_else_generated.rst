@@ -5,19 +5,23 @@ if_else
 
 **Description**
 
-Compare two inputs; output one of the two outputs if condition is met.
+Compares a jolt value with a stream value and outputs a jolt value through one of the two outputs, depending on whether the condition is met or not
 
 **Inputs, output and other parts**
 
 *SetTypeReciever* 
 
-*MainReciver* 
+*Input* (jolt input) Receives value which will be compared with value set in the stream input, triggers the comparison.
 
-*TypeKnob* 
+*Comparison operation* (interactive) Sets the type of the comparison operation.
 
-*s_IN* 
+*Compare with* (stream input) Sets the value that will be compared with the incoming value from the jolt input (without triggering the output).
 
-*Emitter_if* 
+* Output if* (jolt output) Emits received jolt value if the condition is met.
 
-*Emitter_else* 
+* Output else* (jolt output) Emits received jolt value if the condition is not met.
+
+**See also:**
+
+:ref:`compare <compare>`
 

@@ -7,21 +7,19 @@ oscillator
 
 An oscillator with four waveform modes: sinusoid, triangle, sawtooth & square. Frequency is set in Hz (cycles per second).
 
+
+
 **Inputs, output and other parts**
 
-*s_IN*  freq
+*Reset phase* (jolt input) Sets the phase of the oscillator.
 
-*GLASS*  wave type
+*Waveform* (interactive) The waveform of the oscillator. [sine/triangle/sawtooth/square]
 
-*eR_Phase*  set phase
+*Wave type* (jolt input) Sets the waveform of the oscillator. [sine/triangle/sawtooth/square]
 
-*eR_waveType*  set wave type
+*Frequency (Hz)* (stream input) Sets the frequency of the oscillator (in Hertz).
 
-*reset_phase* 
+*Signal output* (stream output) Oscillator output.
 
-*set_wave* 
-
-*frequency* 
-
-*phase_offset* 
+*Phase offset* (stream input) Sets the phase offset of the oscillator.
 

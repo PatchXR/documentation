@@ -17,5 +17,5 @@ Like an extension cable, connects two blocks to pass a stream event through a lo
 
 **See also:**
 
-:ref:`split <split>`
+:ref:`split <split>`, :ref:`fork <fork>`
 

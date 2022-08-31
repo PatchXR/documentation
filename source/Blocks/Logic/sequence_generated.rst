@@ -9,11 +9,15 @@ Routes an incoming jolt to one of many outputs.
 
 **Inputs, output and other parts**
 
-*output_select* (stream input) Selects which output the incoming jolt will be routed to.
+*Select output* (stream input) Selects to which output the incoming jolt will be routed to.
 
-*pull* (interactive) Pull to set the number of output gates.
+*Pull* (interactive) Pull to set the number of output gates.
 
-*input* The jolt which will be routed to the selected output.
+*Input* (jolt input) Receives the jolt which will be routed to the selected output.
 
-*output* (jolt output) One of the possible outputs the input may be routed to.
+*Output* (jolt output) Emits the routed jolt value. One of the possible outputs the input may be routed to.
+
+**See also:**
+
+:ref:`sequence_loop <sequence_loop>`, :ref:`sequence_random <sequence_random>`
 

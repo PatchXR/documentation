@@ -11,3 +11,7 @@ Outputs microphone audio signal as a stream.
 
 *Grab sphere VR* 
 
+**See also:**
+
+:ref:`mic <mic>`
+

@@ -5,21 +5,25 @@ decay
 
 **Description**
 
-A decay envelope - decays the input value (b) over duration to target value (a).
+A decay envelope - decays the input value to target value over a duration of time.
 
 **Inputs, output and other parts**
 
-*s_IN_0*  a
+*Target value* (interactive) Sets the target value the output will decay towards.
 
-*s_IN_1_halftime*  Duration (half-time)
+*Half time* (stream input) Sets how long it will take for the output to go halfway towards the target value (in seconds).
 
 *ButonPivot*  push
 
 *Knob_Pivot*  value
 
-*knob* 
+*Knob* (interactive) Sets value from which the decay will begin.
 
-*btn_dbug* 
+*Button* (interactive) Triggers the decay envelope.
 
-*dec_set_state* 
+*Set state* (jolt input) Sets the value from which the decay will begin and triggers the decay envelope.
+
+**See also:**
+
+:ref:`envelope_ad <envelope_ad>`
 

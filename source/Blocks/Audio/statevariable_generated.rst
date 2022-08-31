@@ -5,15 +5,19 @@ statevariable
 
 **Description**
 
-
+A state variable filter, with center frequency, resonance and filter type settings.
 
 **Inputs, output and other parts**
 
-*s_IN_0* 
+*Signal input* (stream input) The input signal.
 
-*s_IN_1* 
+*Center frequency* (stream input) Center frequency of the filter (in Hz). Must not be less than one.
 
-*s_IN_2* 
+*Resonance* (stream input) Resonance of the filter. Must not be less than zero.
 
-*`SetType* 
+*Filter type* (jolt input) Sets the type of the filter.
+
+**See also:**
+
+:ref:`lowpass <lowpass>`, :ref:`highpass <highpass>`, :ref:`onepole <onepole>`, :ref:`ladder <ladder>`, :ref:`allpass2 <allpass2>`
 

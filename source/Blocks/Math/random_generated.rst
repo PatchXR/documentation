@@ -19,5 +19,5 @@ Outputs a random decimal number between 0 and <b>Max</b>.
 
 **See also:**
 
-:ref:`noise <noise>`, :ref:`pink_noise <pink_noise>`
+:ref:`noise <noise>`, :ref:`pink_noise <pink_noise>`, :ref:`bernoulli <bernoulli>`
 

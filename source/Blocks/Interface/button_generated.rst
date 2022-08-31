@@ -21,5 +21,5 @@ Buttons are one of the basic blocks used to trigger stuff in your world. You can
 
 **See also:**
 
-:ref:`slider <slider>`, :ref:`knob <knob>`
+:ref:`value <value>`, :ref:`slider <slider>`, :ref:`knob <knob>`
 

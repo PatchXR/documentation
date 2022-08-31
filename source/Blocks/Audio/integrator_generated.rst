@@ -5,13 +5,13 @@ integrator
 
 **Description**
 
-A leaky integrator or slew limiter with separate constants for the rise and fall time.
+A leaky integrator with separate constants for the rise and fall time. This block can be used to smooth out an incoming signal so that the change in the signal level cannot exceed a certain value per second. Combine with the 'abs' block to create an envelope follower.
 
 **Inputs, output and other parts**
 
-*input*  The signal to integrate.
+*Signal input* (stream input) The signal to integrate.
 
-*rise* The integration constant to use when the signal is rising.
+*Rise control* (stream input) The integration constant to use when the signal is rising.
 
-*fall*  The integration constant to use when the signal is rising.
+*Fall control* (stream input)  The integration constant to use when the signal is falling.
 

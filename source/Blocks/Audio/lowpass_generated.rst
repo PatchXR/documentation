@@ -5,13 +5,17 @@ lowpass
 
 **Description**
 
-12 dB/oct biquad low-pass filter.
+12 dB/oct (two-pole) biquad low-pass filter.
 
 **Inputs, output and other parts**
 
-*input* Input
+*Signal input* (stream input) The input signal.
 
-*cutoff_freq* Cutoff frequency
+*Cutoff frequency* (stream input) Cutoff frequency of the filter (in Hz). Must not be less than one.
 
-*resonance* Resonance
+*Resonance* (stream input) Resonance of the filter. Must not be less than zero.
+
+**See also:**
+
+:ref:`highpass <highpass>`, :ref:`onepole <onepole>`, :ref:`ladder <ladder>`, :ref:`statevariable <statevariable>`, :ref:`allpass2 <allpass2>`
 

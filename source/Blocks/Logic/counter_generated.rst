@@ -5,17 +5,23 @@ counter
 
 **Description**
 
+Counts the sum of incoming jolts values.
+
 
 
 **Inputs, output and other parts**
 
-*eR_set* 
+*Set* (jolt input) Sets current count value and triggers the output.
 
-*emitter* 
+*Output* (jolt output) Emits the current count value as a jolt.
 
-*eR_icc* 
+*Increment* (jolt input) Counter increment value. Each received jolt value is added to the count and triggers the output.
 
-*knob* 
+*Knob* (interactive) Sets the value.
 
-*btn_dbug* 
+*Button* (interactive) Triggers the value set by the knob.
+
+**See also:**
+
+:ref:`cyclecounter <cyclecounter>`, :ref:`nth <nth>`
 

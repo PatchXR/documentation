@@ -5,13 +5,17 @@ gate
 
 **Description**
 
-Allows or disallows signal to pass based on a value
+Allows or disallows jolts to pass based on the set stream value.
 
 **Inputs, output and other parts**
 
-*Emitter* 
+*Output* (jolt output) Emits the received jolt value as a jolt if gate value is equal or greater than 0.5
 
-*s_IN* Signal input
+*Gate* (stream input) Sets the gate state. Values equal or greater than 0.5 will set gate state to 'open'.
 
-*er_HOT* 
+*Input* (jolt input) Receives jolt value which will be passed to the output if gate value is equal or greater than 0.5
+
+**See also:**
+
+:ref:`sequence <sequence>`
 

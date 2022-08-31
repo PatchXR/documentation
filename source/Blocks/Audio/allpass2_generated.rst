@@ -9,9 +9,13 @@ Second order allpass filter for implementing phasors and such.
 
 **Inputs, output and other parts**
 
-*input* The input signal.
+*Signal input* (stream input) The input signal.
 
-*frequency* The 'break' frequency of the filter.
+*Frequency* (stream input) The 'break' frequency of the filter.
 
-*radius* The radius/steepness of the filter.
+*Radius* (stream input) The radius/steepness of the filter.
+
+**See also:**
+
+:ref:`lowpass <lowpass>`, :ref:`highpass <highpass>`, :ref:`onepole <onepole>`, :ref:`ladder <ladder>`, :ref:`statevariable <statevariable>`
 

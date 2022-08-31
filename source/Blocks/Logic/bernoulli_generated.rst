@@ -5,15 +5,19 @@ bernoulli
 
 **Description**
 
-
+Routes an incoming jolt to either of two outputs based on probability. With probability value set closer to 0 the jolt will more like go though output A, while if value will be set closer to 1 - though output B.
 
 **Inputs, output and other parts**
 
-*s_IN* 
+*Probability* (stream input) Probability distribution value.
 
-*Emmiter_0* 
+*Output A* (jolt output) Emits jolt value based on set probability.
 
-*Emmiter_1* 
+*Output B* (jolt output) Emits jolt value based on set probability.
 
-*eR_hot* 
+*Input* (jolt input) Receives jolt value which will be passed to either of the outputs.
+
+**See also:**
+
+:ref:`random <random>`, :ref:`sequence_random <sequence_random>`
 

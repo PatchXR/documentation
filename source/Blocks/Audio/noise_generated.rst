@@ -11,3 +11,7 @@ Generates white noise - a signal with uniform energy across the frequency spectr
 
 *glass* 
 
+**See also:**
+
+:ref:`pink_noise <pink_noise>`
+

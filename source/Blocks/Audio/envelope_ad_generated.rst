@@ -5,19 +5,23 @@ envelope_ad
 
 **Description**
 
-A two-stage, Attack-Decay envelope
+A two-stage, Attack-Decay envelope with linear response. Attack begins from 0 and rises to 1. Decay begins from 1 and falls to 0. Connect the 'End of attack' output to the 'Decay trigger' input to trigger the decay stage right after attack finishes.
 
 **Inputs, output and other parts**
 
-*s_IN_attack* Attack
+*Attack time* (stream input) Attack stage time (in seconds).
 
-*s_IN_decay* Decay
+*Decay time* (stream input) Decay stage time (in seconds).
 
-*e_OUT_hhitTop* 
+*End of attack* (jolt output) Emits jolt once the attack stage finishes. Connect to the 'Decay trigger' input to trigger the decay stage right after attack finishes.
 
-*e_OUT_hit_buttom* 
+*End of decay* (jolt output) Emits jolt once the decay stage finishes.
 
-*eR_note_on* 
+*Attack trigger* (jolt input) Triggers the attack stage of the envelope.
 
-*eR_note_off* 
+*Decay trigger* (jolt input) Triggers the decay stage of the envelope.
+
+**See also:**
+
+:ref:`decay <decay>`
 

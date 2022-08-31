@@ -11,3 +11,7 @@ A stream constant value.
 
 *knobBody* 
 
+**See also:**
+
+:ref:`knob <knob>`, :ref:`custom_knob <custom_knob>`, :ref:`custom_knob2 <custom_knob2>`
+

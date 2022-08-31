@@ -5,11 +5,11 @@ vel
 
 **Description**
 
-Outputs the delta between the current and the previous sample.
+Outputs the difference (delta) between the current and the previous sample value.
 
 **Inputs, output and other parts**
 
-*s_IN* 
+*Signal input* (stream input) Signal to be analyzed.
 
 *Grab sphere VR* 
 

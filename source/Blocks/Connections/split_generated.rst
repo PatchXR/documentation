@@ -19,5 +19,5 @@ Splitter, transmits one input stream as two identical stream outputs (A and B) -
 
 **See also:**
 
-:ref:`extension <extension>`
+:ref:`extension <extension>`, :ref:`fork <fork>`
 

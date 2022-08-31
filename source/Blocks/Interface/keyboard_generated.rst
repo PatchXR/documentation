@@ -5,45 +5,17 @@ keyboard
 
 **Description**
 
-Tunable keyboard. Ouputs midi note on the configured scale.
+A keyboard interface that can be used to play notes by pressing the keys or to play music from a specific scale using the jolt input.
 
 **Inputs, output and other parts**
 
-*e_OUT*  Output the midi note.
+*MIDI Out* (jolt output) Outputs the MIDI-number of the key you press, or the corresponding note if you send a jolt to INPUT.
 
-*esReciver*  Note id.
+*Input* (jolt input) Send a jolt to make the keyboard output the MIDI-number of the corresponding note in the scale, starting form zero. E.g. sending 0 will send out the root note, or if you have a major or minor scale selected sending a 2 will output the third.
 
-*knob*  Tune the keyboard. Maps "C" key to choosen note.
+*Root note* (knob) Sets the root note of the keyboard and scale. Maps "C" key to choosen note.
 
-*Event_Receiver*  Tune the keyboard. Maps "C" key to choosen note.
+*Root note* (jolt input) Send a jolt to set the root note of the keyboard and scale. Maps "C" key to choosen note.
 
-*toggle_edit*  Switch between Play/Scale edit mode.
-
-*KEY_C_parent* 
-
-*KEY_C_Sharp_parent* 
-
-*KEY_D_parent* 
-
-*KEY_E_Flat_parent* 
-
-*KEY_E_parent* 
-
-*KEY_F_parent* 
-
-*KEY_F_Sharp_parent* 
-
-*KEY_G_parent* 
-
-*KEY_G_Sharp_parent* 
-
-*KEY_A_parent* 
-
-*KEY_B_Flat_parent* 
-
-*KEY_B_parent* 
-
-*Grab sphere VR* 
-
-*Grab sphere VR (1)* 
+*Play/Scale Toggle*  Switch between Play/Scale edit mode.
 

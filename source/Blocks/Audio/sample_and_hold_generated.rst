@@ -9,9 +9,9 @@ Stores the value of a signal when a clock or event is received.
 
 **Inputs, output and other parts**
 
-*clock* Clock
+*Clock input* (stream input) Each time when this values goes high the input signal value will be held.
 
-*input* Stream input
+*Signal input* (stream input) Signal to be sampled.
 
 *sample* Sample
 

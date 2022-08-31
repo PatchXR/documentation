@@ -5,9 +5,9 @@ previous
 
 **Description**
 
-Outputs the previous sample.
+Delays the incoming stream by a single sample.
 
 **Inputs, output and other parts**
 
-*s_IN* Stream input
+*Input* (stream input) The stream to delay by a single sample.
 

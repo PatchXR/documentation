@@ -9,13 +9,13 @@ Applies brick wall limiting to the incoming signal, to control the amplitude.
 
 **Inputs, output and other parts**
 
-*input* 
+*Signal input* (stream input) The signal to which the limiting will be applied.
 
-*release_s* 
+*Release time* (stream input) How fast the limiter will stop suppressing the input signal once the threshold is no longer crossed.
 
-*lookahead_delay_s* 
+*Look-ahead time* (stream input) Time 'ahead' at which the limiter will start suppressing the signal once the threshold has been crossed.
 
-*attack_s* 
+*Attack time* (stream input) How fast the limiter will start suppressing the input signal once the threshold level has been crossed.
 
-*threshold* 
+*Threshold level* (stream input) The signal level above which the limiting will be applied. Set in linear units. (0-1 range)
 

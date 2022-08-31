@@ -5,13 +5,17 @@ ladder
 
 **Description**
 
-A bandpass like filter, with freq and resonance settings.
+A 24 dB/oct (four-pole) bandpass-like filter, with center frequency and resonance settings.
 
 **Inputs, output and other parts**
 
-*s_IN_0* 
+*Signal input* (stream input) The input signal.
 
-*s_IN_1_cutof_freq* 
+*Center frequency* (stream input) Center frequency of the filter (in Hz). Must not be less than one.
 
-*s_IN_2_resonance* 
+*Resonance* (stream input) Resonance of the filter. Must not be less than zero.
+
+**See also:**
+
+:ref:`lowpass <lowpass>`, :ref:`highpass <highpass>`, :ref:`onepole <onepole>`, :ref:`statevariable <statevariable>`, :ref:`allpass2 <allpass2>`
 
