@@ -5,6 +5,7 @@ import os
 import json
 import pathlib
 import shutil
+import csv
 
 # Construct the argument parser
 parser = argparse.ArgumentParser(description='Convert the block .json files in the NewPatch repository to .rst documentation.')
@@ -68,8 +69,7 @@ if verbose:
 for root, dirs, files in os.walk(blocksFolder):
     for file in files:
 
-        # We're only interested in .json files in the subfolders of
-        # the blocks folder.
+        # We're only interested in .json files in the subfolders of the blocks folder.
         if root == blocksFolder:
             continue
 
@@ -85,6 +85,12 @@ for root, dirs, files in os.walk(blocksFolder):
             except Exception as e:
                 print(f'Error while reading and parsing file {path}.')
                 print(e)
+
+# Sort blocks by menuPath
+blocks = sorted(blocks, key=lambda x: x['menuPath'])
+
+
+
 
 # Takes a block description dictionary and outputs a string with
 # the generated .rst documentation.
@@ -194,6 +200,47 @@ for root, dirs, files in os.walk('source/Blocks'):
 
     with open(pathToTocFile, 'w') as f:
         f.write(tocFileText)
+
+def generateCsvRowForBlock(block):
+    row = [
+        block['name'], 
+        block['description'], 
+        block.get('longDescription', ''),  
+        block['menuPath']  # Adding the category/menuPath information
+
+    ]
+    
+    # Assuming that the block['parts'] is a list and 'name', 'type', and 'description' are always present.
+    parts_string = '; '.join([f'{part["name"]} ({part["type"]}) {part["description"]}' for part in block['parts']])
+    row.append(parts_string)
+
+    # Adding related blocks (joined by ", ")
+    relatedBlocks = block.get('relatedBlocks', [])
+    relatedBlockNames = [b['name'] for b in relatedBlocks]
+    row.append(", ".join(relatedBlockNames))
+
+    return row
+
+# Now, let's also generate the CSV data
+output_filename = 'blocks_data.csv'
+
+with open(output_filename, 'w', newline='', encoding='utf-8') as csvfile:
+    csvwriter = csv.writer(csvfile)
+    
+    # Writing headers first
+
+    csvwriter.writerow(['Name', 'Description', 'Long Description', 'menuPath', 'Parts', 'Related Blocks'])
+
+    
+    for block in blocks:
+        if block['includeInWebDocumentation']:
+            csv_row = generateCsvRowForBlock(block)
+            csvwriter.writerow(csv_row)
+
+if verbose:
+    print(f"Data written to {output_filename}")
+
+
 
 if verbose:
     print(f'Done')
