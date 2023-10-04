@@ -205,8 +205,9 @@ def generateCsvRowForBlock(block):
     row = [
         block['name'], 
         block['description'], 
-        block.get('longDescription', ''),  # Will get the value if exists, otherwise an empty string
+        block.get('longDescription', ''),  
         block['menuPath']  # Adding the category/menuPath information
+
     ]
     
     # Assuming that the block['parts'] is a list and 'name', 'type', and 'description' are always present.
@@ -220,8 +221,6 @@ def generateCsvRowForBlock(block):
 
     return row
 
-
-
 # Now, let's also generate the CSV data
 output_filename = 'blocks_data.csv'
 
@@ -229,13 +228,14 @@ with open(output_filename, 'w', newline='', encoding='utf-8') as csvfile:
     csvwriter = csv.writer(csvfile)
     
     # Writing headers first
+
     csvwriter.writerow(['Name', 'Description', 'Long Description', 'menuPath', 'Parts', 'Related Blocks'])
+
     
     for block in blocks:
         if block['includeInWebDocumentation']:
             csv_row = generateCsvRowForBlock(block)
             csvwriter.writerow(csv_row)
-
 
 if verbose:
     print(f"Data written to {output_filename}")
