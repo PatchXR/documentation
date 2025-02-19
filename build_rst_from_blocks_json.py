@@ -53,6 +53,13 @@ for root, dirs, files in os.walk('source/Blocks'):
 
         shutil.rmtree(root)
 
+# Add these constants near the top of the file
+THUMBNAILS_SOURCE = '../NewPatch/Assets/_Textures/Resources/Thumbnails/Blocks'
+THUMBNAILS_DEST = 'source/_static/block-thumbnails'
+
+# Create thumbnails destination directory if it doesn't exist
+pathlib.Path(THUMBNAILS_DEST).mkdir(parents=True, exist_ok=True)
+
 # Reads and parses the given file from JSON into a dictionary
 def readAndParseBlockJson(path):
     with open(path, 'r') as f:
@@ -65,11 +72,39 @@ blocks = []
 if verbose:
     print(f'Reading and parsing block files')
 
+# We'll add this function near the top with the other functions
+def get_menu_path_from_file_path(file_path, blocks_folder):
+    """Extract menu path from the block's file location relative to blocks folder"""
+    # Remove the blocks folder prefix and any leading/trailing slashes
+    relative_path = os.path.relpath(os.path.dirname(file_path), blocks_folder)
+    if relative_path == '.':
+        return ''
+    return relative_path.replace('\\', '/')
+
+# Add this function with the other utility functions
+def find_thumbnail(block_name, thumbnails_dir):
+    """Find the thumbnail image for a block, returns None if not found"""
+    # Common image extensions to try
+    extensions = ['.png', '.jpg', '.jpeg']
+    
+    # Try exact name match first
+    for ext in extensions:
+        image_path = os.path.join(thumbnails_dir, block_name + ext)
+        if os.path.exists(image_path):
+            return image_path
+            
+    # Try case-insensitive match
+    block_name_lower = block_name.lower()
+    for filename in os.listdir(thumbnails_dir):
+        name, ext = os.path.splitext(filename)
+        if ext.lower() in ['.png', '.jpg', '.jpeg'] and not filename.endswith('.meta'):
+            if name.lower() == block_name_lower:
+                return os.path.join(thumbnails_dir, filename)
+    
+    return None
+
 for root, dirs, files in os.walk(blocksFolder):
     for file in files:
-
-        # We're only interested in .json files in the subfolders of
-        # the blocks folder.
         if root == blocksFolder:
             continue
 
@@ -81,6 +116,24 @@ for root, dirs, files in os.walk(blocksFolder):
                     print(f'Reading and parsing {path}')
 
                 block = readAndParseBlockJson(path)
+                block['menuPath'] = get_menu_path_from_file_path(path, blocksFolder)
+                
+                # Find and process thumbnail
+                thumbnail_path = find_thumbnail(block['name'], THUMBNAILS_SOURCE)
+                if thumbnail_path:
+                    filename = os.path.basename(thumbnail_path)
+                    block['thumbnailImage'] = f'block-thumbnails/{filename}'
+                    
+                    # Copy the thumbnail file
+                    dest_path = os.path.join(THUMBNAILS_DEST, filename)
+                    if verbose:
+                        print(f'Copying thumbnail {filename}')
+                    shutil.copy2(thumbnail_path, dest_path)
+                else:
+                    block['thumbnailImage'] = None
+                    if verbose:
+                        print(f'No thumbnail found for {block["name"]}')
+                
                 blocks.append(block)
             except Exception as e:
                 print(f'Error while reading and parsing file {path}.')
@@ -115,9 +168,8 @@ def generateRstDocumentationForBlock(block):
     if len(relatedBlocks) > 0:
         result += '**See also:**\n\n'
 
-        relatedBlockNames = [b['name'] for b in relatedBlocks]
-        relatedBlockLinks = [f':ref:`{n} <{n}>`' for n in relatedBlockNames]
-
+        # Modified this section - relatedBlocks are already strings
+        relatedBlockLinks = [f':ref:`{name} <{name}>`' for name in relatedBlocks]
         result += ', '.join(relatedBlockLinks) + "\n\n"
 
     return result
@@ -145,6 +197,28 @@ for block in blocks:
 
         with open(path, 'w') as f:
             f.write(rst)
+
+# After processing all blocks, create a consolidated JSON file
+if verbose:
+    print(f'Generating consolidated JSON file')
+
+# Add docFile paths to blocks (removed the web_blocks filter)
+for block in blocks:
+    doc_path = f"Blocks/{block['menuPath']}/{block['name']}_generated.rst"
+    block['docFile'] = doc_path
+
+# Create the output data structure with all blocks
+output_data = {
+    "blocks": blocks  # Using all blocks instead of web_blocks
+}
+
+# Write the consolidated JSON file
+json_output_path = 'source/blocks_data.json'
+with open(json_output_path, 'w') as json_file:
+    json.dump(output_data, json_file, indent=2)
+
+if verbose:
+    print(f'Wrote consolidated JSON to {json_output_path}')
 
 if verbose:
     print(f'Reading Blocks.rst template')
