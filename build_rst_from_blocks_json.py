@@ -5,6 +5,7 @@ import os
 import json
 import pathlib
 import shutil
+import csv
 
 # Construct the argument parser
 parser = argparse.ArgumentParser(description='Convert the block .json files in the NewPatch repository to .rst documentation.')
@@ -117,7 +118,8 @@ for root, dirs, files in os.walk(blocksFolder):
 
                 block = readAndParseBlockJson(path)
                 block['menuPath'] = get_menu_path_from_file_path(path, blocksFolder)
-                
+                block['sourceJsonPath'] = path
+
                 # Find and process thumbnail
                 thumbnail_path = find_thumbnail(block['name'], THUMBNAILS_SOURCE)
                 if thumbnail_path:
@@ -219,6 +221,63 @@ with open(json_output_path, 'w') as json_file:
 
 if verbose:
     print(f'Wrote consolidated JSON to {json_output_path}')
+
+# Generate a spreadsheet for all blocks
+if verbose:
+    print('Generating spreadsheet for all blocks')
+
+# Find the maximum number of parts to create columns for
+max_parts = 0
+if blocks:
+    max_parts = max(len(b.get('parts', [])) for b in blocks)
+
+csv_output_path = 'blocks_datasheet.csv'
+# Start with the base headers
+csv_headers = [
+    'name',
+    'displayName',
+    'sourceJsonPath',
+    'description',
+    'longDescription',
+    'categories',
+    'relatedBlocks',
+    'includeInWebDocumentation'
+]
+
+# Add the dynamic part headers
+for i in range(max_parts):
+    csv_headers.append(f'part_{i+1}_name')
+    csv_headers.append(f'part_{i+1}_description')
+    csv_headers.append(f'part_{i+1}_type')
+
+try:
+    with open(csv_output_path, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=csv_headers, extrasaction='ignore')
+        writer.writeheader()
+        for block in blocks:
+            row_data = {
+                'name': block.get('name'),
+                'displayName': block.get('displayName', block.get('name')),
+                'sourceJsonPath': block.get('sourceJsonPath'),
+                'description': block.get('description', ''),
+                'longDescription': block.get('longDescription', ''),
+                'categories': json.dumps(block.get('categories', [])),
+                'relatedBlocks': json.dumps(block.get('relatedBlocks', [])),
+                'includeInWebDocumentation': block.get('includeInWebDocumentation', False)
+            }
+            
+            # Add the parts data as flattened columns
+            for i, part in enumerate(block.get('parts', [])):
+                row_data[f'part_{i+1}_name'] = part.get('name', '')
+                row_data[f'part_{i+1}_description'] = part.get('description', '')
+                row_data[f'part_{i+1}_type'] = part.get('type', '')
+
+            writer.writerow(row_data)
+
+    if verbose:
+        print(f'Successfully created spreadsheet at {csv_output_path}')
+except Exception as e:
+    print(f'Error creating spreadsheet: {e}')
 
 if verbose:
     print(f'Reading Blocks.rst template')
