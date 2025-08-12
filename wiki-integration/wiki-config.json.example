@@ -1,0 +1,23 @@
+{
+  "wiki_url": "http://194.195.245.119:3000",
+  "wiki_api_token": "YOUR_API_TOKEN_HERE",
+  "blocks_data_path": "../source/blocks_data.json",
+  "documentation_path": "..",
+  "thumbnails_path": "../source/_static/block-thumbnails",
+  "locale": "en",
+  "verbose": false,
+  "upload_images": true,
+  "create_category_pages": true,
+  "page_prefix": "/blocks",
+  "excluded_categories": [
+    "For removal"
+  ],
+  "image_base_url": "http://194.195.245.119:3000/uploads",
+  "ssh_config": {
+    "enabled": false,
+    "host": "194.195.245.119",
+    "user": "root",
+    "key_path": "~/.ssh/id_ed25519",
+    "wiki_docker_path": "/opt/wiki"
+  }
+}
