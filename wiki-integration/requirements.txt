@@ -1,0 +1,13 @@
+# Wiki.js Integration Dependencies
+
+# HTTP requests for GraphQL API
+requests>=2.28.0
+
+# Optional: Better RST to Markdown conversion
+# pypandoc>=1.7.5
+
+# Optional: Image processing
+# Pillow>=9.0.0
+
+# Optional: SSH operations
+# paramiko>=2.9.0

@@ -1,2 +1,21 @@
 _build/*
 build/*
+
+# Ignore all files in 
+source/*
+
+# Wiki integration (secrets, venv, logs, caches)
+wiki-integration/wiki-config.json
+wiki-integration/env/
+wiki-integration/.venv/
+wiki-integration/venv/
+wiki-integration/__pycache__/
+wiki-integration/**/*.pyc
+wiki-integration/*.log
+wiki-integration/.env
+wiki-integration/.env.*
+wiki-integration/.mypy_cache/
+wiki-integration/.pytest_cache/
+wiki-integration/build/
+wiki-integration/dist/
+wiki-integration/*.egg-info/
