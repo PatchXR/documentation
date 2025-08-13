@@ -107,16 +107,8 @@ def main():
         ):
             success = False
         
-        print("\n🔨 copied portal stuff.")
-        # if run_command(
-        #     ['npm', 'run', 'build'],
-        #     "Building portal",
-        #     cwd=portal_path
-        # ):
-        #     print("✅ Portal built successfully")
-        #     print("📡 Remember to deploy the portal to portal.patchxr.io!")
-        # else:
-        #     print("⚠️ Portal build failed, but continuing...")
+        print("\n✅ Portal files updated successfully")
+        print("📡 Remember to commit and deploy the portal to portal.patchxr.io!")
     else:
         print(f"⚠️ Portal not found at {portal_path}, skipping portal update")
     

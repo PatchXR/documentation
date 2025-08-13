@@ -309,8 +309,9 @@ class SimpleWikiPopulator:
             # Create page content
             content = self.create_block_page_content(block)
             
-            # Use organized path based on categories
-            block_categories = [cat for cat in block.get('categories', []) if cat != 'For removal']
+            # Use organized path based on categories (filter out unwanted categories)
+            block_categories = [cat for cat in block.get('categories', []) 
+                              if cat not in ['For removal', 'For Hiding']]
             category_path = self.get_category_path(block_categories)
             path = f"/{category_path}/{block_name.lower()}"
             
@@ -333,8 +334,11 @@ class SimpleWikiPopulator:
                     failed += 1
                     self.logger.error(f"  -> Failed: {path}")
             
-            # Group by categories for index pages
+            # Group by categories for index pages (filter out unwanted categories)
             for category in block_categories:
+                # Skip categories that shouldn't appear in wiki
+                if category in ['For removal', 'For Hiding']:
+                    continue
                 if category not in categories:
                     categories[category] = []
                 categories[category].append(block)
@@ -379,10 +383,10 @@ class SimpleWikiPopulator:
     def create_blocks_index_page(self, main_categories: Dict[str, List[Dict]]) -> bool:
         """Create the main blocks index page."""
         path = "/blocks"
-        title = "PatchWorld Blocks"
+        title = "Blocks"
         
-        content = [f"# {title}", ""]
-        content.append("Welcome to the PatchWorld Blocks documentation! Blocks are the building components you use to create patches in PatchWorld.")
+        content = []
+        content.append("Welcome to the Blocks documentation! Blocks are the building components you use to create patches in PatchWorld.")
         content.append("")
         content.append("## Block Categories")
         content.append("")
@@ -395,16 +399,20 @@ class SimpleWikiPopulator:
         # First show ordered categories
         for category in category_order:
             if category in main_categories:
-                block_count = len(main_categories[category])
+                # Remove duplicates by converting to set, then back to list
+                unique_blocks = list({block['name']: block for block in main_categories[category]}.values())
+                block_count = len(unique_blocks)
                 category_path = f"/blocks/{category.lower().replace(' ', '-')}"
                 content.append(f"### [{category}]({category_path})")
                 content.append(f"*{block_count} blocks*")
                 content.append("")
         
-        # Then show any remaining categories
+        # Then show any remaining categories (except filtered ones)
         for category, blocks in main_categories.items():
-            if category not in category_order:
-                block_count = len(blocks)
+            if category not in category_order and category not in ['For removal', 'For Hiding', '']:
+                # Remove duplicates by converting to set, then back to list
+                unique_blocks = list({block['name']: block for block in blocks}.values())
+                block_count = len(unique_blocks)
                 category_path = f"/blocks/{category.lower().replace(' ', '-')}"
                 content.append(f"### [{category}]({category_path})")
                 content.append(f"*{block_count} blocks*")
