@@ -156,6 +156,21 @@ class SimpleWikiPopulator:
         
         return '\n'.join(content)
     
+    def get_category_path(self, categories: List[str]) -> str:
+        """Get the organized path for a block based on its categories."""
+        if not categories:
+            return "blocks/uncategorized"
+        
+        # Use the first category as the main category
+        main_category = categories[0]
+        
+        # Handle category hierarchy like "Audio/Generators" -> "audio/generators"
+        if '/' in main_category:
+            parts = main_category.split('/')
+            return f"blocks/{'/'.join(part.lower().replace(' ', '-') for part in parts)}"
+        else:
+            return f"blocks/{main_category.lower().replace(' ', '-')}"
+    
     def create_page(self, path: str, title: str, content: str, tags: List[str] = None) -> bool:
         """Create a new page in Wiki.js."""
         mutation = """
@@ -236,10 +251,18 @@ class SimpleWikiPopulator:
         
         return False
     
-    def create_category_page(self, category: str, blocks: List[Dict]) -> bool:
+    def create_category_page(self, category: str, blocks: List[Dict], is_subcategory: bool = False) -> bool:
         """Create a category index page."""
-        path = f"/blocks/category/{category.lower().replace(' ', '-')}"
-        title = f"{category} Blocks"
+        if is_subcategory:
+            # For subcategories like "Audio/Generators"
+            category_path = category.lower().replace(' ', '-').replace('/', '/')
+            path = f"/blocks/{category_path}"
+            title = category.split('/')[-1] + " Blocks"  # "Generators Blocks"
+        else:
+            # For main categories like "Audio"
+            category_path = category.lower().replace(' ', '-')
+            path = f"/blocks/{category_path}"
+            title = f"{category} Blocks"
         
         content = [f"# {title}", ""]
         content.append(f"This category contains **{len(blocks)}** blocks:")
@@ -249,12 +272,16 @@ class SimpleWikiPopulator:
         sorted_blocks = sorted(blocks, key=lambda x: x['name'].lower())
         
         for block in sorted_blocks:
-            block_path = f"/blocks/{block['name'].lower()}"
+            # Use the organized path for the block
+            block_categories = block.get('categories', [])
+            block_path = self.get_category_path(block_categories)
+            block_page_path = f"/{block_path}/{block['name'].lower()}"
+            
             desc = block.get('description', 'No description available')
             # Truncate long descriptions
             if len(desc) > 100:
                 desc = desc[:97] + "..."
-            content.append(f"- [{block['name']}]({block_path}) - {desc}")
+            content.append(f"- [{block['name']}]({block_page_path}) - {desc}")
         
         content_str = '\n'.join(content)
         tags = ['blocks', 'category', category.lower()]
@@ -281,12 +308,16 @@ class SimpleWikiPopulator:
             
             # Create page content
             content = self.create_block_page_content(block)
-            path = f"/blocks/{block_name.lower()}"
+            
+            # Use organized path based on categories
+            block_categories = [cat for cat in block.get('categories', []) if cat != 'For removal']
+            category_path = self.get_category_path(block_categories)
+            path = f"/{category_path}/{block_name.lower()}"
+            
             title = block.get('displayName', block_name)
             
             # Create tags
             tags = ['blocks']
-            block_categories = [cat for cat in block.get('categories', []) if cat != 'For removal']
             tags.extend(block_categories)
             tags.extend(block.get('tags', []))
             
@@ -311,11 +342,82 @@ class SimpleWikiPopulator:
         # Create category index pages
         if not dry_run and self.config.get('create_category_pages', True):
             self.logger.info(f"Creating {len(categories)} category pages...")
+            
+            # Group categories by main category for better organization
+            main_categories = {}
+            subcategories = {}
+            
             for category, category_blocks in categories.items():
-                if self.create_category_page(category, category_blocks):
-                    self.logger.info(f"Created category page: {category}")
+                if '/' in category:
+                    # This is a subcategory like "Audio/Generators"
+                    main_cat = category.split('/')[0]
+                    if main_cat not in main_categories:
+                        main_categories[main_cat] = []
+                    main_categories[main_cat].extend(category_blocks)
+                    subcategories[category] = category_blocks
+                else:
+                    # This is a main category
+                    if category not in main_categories:
+                        main_categories[category] = []
+                    main_categories[category].extend(category_blocks)
+            
+            # Create main category pages
+            for main_category, main_blocks in main_categories.items():
+                if self.create_category_page(main_category, main_blocks, is_subcategory=False):
+                    self.logger.info(f"Created main category page: {main_category}")
+            
+            # Create subcategory pages
+            for subcategory, sub_blocks in subcategories.items():
+                if self.create_category_page(subcategory, sub_blocks, is_subcategory=True):
+                    self.logger.info(f"Created subcategory page: {subcategory}")
+            
+            # Create main blocks index page
+            self.create_blocks_index_page(main_categories)
         
         self.logger.info(f"Finished: {successful} successful, {failed} failed")
+    
+    def create_blocks_index_page(self, main_categories: Dict[str, List[Dict]]) -> bool:
+        """Create the main blocks index page."""
+        path = "/blocks"
+        title = "PatchWorld Blocks"
+        
+        content = [f"# {title}", ""]
+        content.append("Welcome to the PatchWorld Blocks documentation! Blocks are the building components you use to create patches in PatchWorld.")
+        content.append("")
+        content.append("## Block Categories")
+        content.append("")
+        
+        # Sort categories to match portal order
+        category_order = [
+            "Interfaces", "Audio", "Visuals", "Motion", "Logic", "Player", "System"
+        ]
+        
+        # First show ordered categories
+        for category in category_order:
+            if category in main_categories:
+                block_count = len(main_categories[category])
+                category_path = f"/blocks/{category.lower().replace(' ', '-')}"
+                content.append(f"### [{category}]({category_path})")
+                content.append(f"*{block_count} blocks*")
+                content.append("")
+        
+        # Then show any remaining categories
+        for category, blocks in main_categories.items():
+            if category not in category_order:
+                block_count = len(blocks)
+                category_path = f"/blocks/{category.lower().replace(' ', '-')}"
+                content.append(f"### [{category}]({category_path})")
+                content.append(f"*{block_count} blocks*")
+                content.append("")
+        
+        content.append("---")
+        content.append("")
+        content.append("*This documentation is automatically generated from the PatchWorld application.*")
+        
+        content_str = '\n'.join(content)
+        tags = ['blocks', 'index', 'documentation']
+        
+        return self.create_page(path, title, content_str, tags)
 
 def run_cleanup(dry_run: bool = False):
     """Run the cleanup script."""

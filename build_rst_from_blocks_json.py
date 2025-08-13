@@ -55,7 +55,7 @@ for root, dirs, files in os.walk('source/Blocks'):
         shutil.rmtree(root)
 
 # Add these constants near the top of the file
-THUMBNAILS_SOURCE = '../NewPatch/Assets/_Textures/Resources/Thumbnails/Blocks'
+THUMBNAILS_SOURCE = '../NewPatch/Assets/StreamingAssets/Thumbnails/Blocks'
 THUMBNAILS_DEST = 'source/_static/block-thumbnails'
 
 # Create thumbnails destination directory if it doesn't exist
@@ -257,7 +257,7 @@ try:
         for block in blocks:
             row_data = {
                 'name': block.get('name'),
-                'displayName': block.get('displayName', block.get('name')),
+                'displayName': block.get('displayName'),
                 'sourceJsonPath': block.get('sourceJsonPath'),
                 'description': block.get('description', ''),
                 'longDescription': block.get('longDescription', ''),
