@@ -119,18 +119,69 @@ def main():
     if os.path.exists(wiki_path):
         response = input("Do you want to update the wiki now? (y/N): ")
         if response.lower().startswith('y'):
-            if run_command(
-                ['python', 'wiki-populate-simple.py', '--cleanup', '--verbose'],
-                "Updating wiki",
-                cwd=wiki_path
-            ):
-                print("✅ Wiki updated successfully!")
+            # Check if git sync is configured
+            print("\n🔄 Wiki Update Method:")
+            print("1. Git sync (recommended) - Generate markdown files locally")
+            print("2. API update (legacy) - Direct API calls to Wiki.js")
+            print("")
+            
+            method = input("Which method to use? (1/2) [1]: ").strip()
+            
+            if method == '2':
+                # Legacy API method
+                print("\n📝 Using API method...")
+                print("⚠️  Note: This is slower and may timeout")
+                if run_command(
+                    ['python', 'wiki-populate-simple.py', '--verbose'],
+                    "Updating wiki via API",
+                    cwd=wiki_path
+                ):
+                    print("✅ Wiki updated successfully!")
+                else:
+                    print("❌ Wiki update failed")
+                    success = False
             else:
-                print("❌ Wiki update failed")
-                success = False
+                # Git sync method (default)
+                print("\n📝 Using Git sync method...")
+                # Default to block-docs in user home directory
+                default_repo_path = os.path.expanduser("~/block-docs").replace("\\", "/")
+                # For Windows, also try the explicit path
+                if not os.path.exists(default_repo_path):
+                    default_repo_path = "C:/Users/mcbub/block-docs"
+                
+                if os.path.exists(default_repo_path):
+                    print(f"Using default repo path: {default_repo_path}")
+                    repo_path = default_repo_path
+                else:
+                    repo_path = input("Enter path to your wiki git repo: ").strip()
+                    if not repo_path:
+                        print("❌ No path provided")
+                        success = False
+                        repo_path = None
+                
+                if repo_path and os.path.exists(repo_path):
+                    if run_command(
+                        ['python', 'wiki-generate-markdown.py', '--output', repo_path],
+                        "Generating markdown files",
+                        cwd=wiki_path
+                    ):
+                        print("\n✅ Markdown files generated successfully!")
+                        print("📤 Next steps:")
+                        print(f"   1. cd {repo_path}")
+                        print("   2. git add .")
+                        print("   3. git commit -m 'Update block documentation'")
+                        print("   4. git push")
+                        print("   5. Wiki.js will sync automatically")
+                    else:
+                        print("❌ Markdown generation failed")
+                        success = False
+                else:
+                    if repo_path:
+                        print(f"❌ Directory not found: {repo_path}")
+                    success = False
         else:
             print("⏭️  Skipping wiki update")
-            print(f"   To update later: cd {wiki_path} && python wiki-populate-simple.py --cleanup --verbose")
+            print(f"   To update later: cd {wiki_path} && python wiki-generate-markdown.py")
     else:
         print(f"⚠️ Wiki integration not found at {wiki_path}")
     
