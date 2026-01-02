@@ -24,6 +24,7 @@ class MarkdownGenerator:
         self.blocks_data_path = Path(self.config['blocks_data_path'])
         self.block_folders_path = Path(self.config.get('block_folders_path', 
                                       'C:\\Users\\mcbub\\NewPatch\\Assets\\StreamingAssets\\block_folders.json'))
+        self.block_path_map = {}  # Map block names to their folder paths
         
     def load_config(self, config_path: str) -> Dict:
         """Load configuration from JSON file."""
@@ -126,6 +127,7 @@ class MarkdownGenerator:
         
         return search_folders(folders)
     
+    
     def find_thumbnail_url(self, block_name: str) -> Optional[str]:
         """Find thumbnail URL for a block."""
         thumbnails_path = self.config.get('thumbnails_path', '')
@@ -144,16 +146,15 @@ class MarkdownGenerator:
         
         return None
     
-    def create_block_content(self, block: Dict, category: str, folder_info: Dict) -> str:
+    def create_block_content(self, block: Dict, category: str, folder_info: Dict, display_name: str = None) -> str:
         """Create markdown content for a block."""
         content = []
         
         # Title with emoji if available
         icon = folder_info.get('icon', '')
-        if icon:
-            content.append(f"# {block['name']}")
-        else:
-            content.append(f"# {block['name']}")
+        # Use display name if provided, otherwise fall back to block name
+        title = display_name or block['name']
+        content.append(f"# {title}")
         
         content.append("")
         
@@ -195,7 +196,14 @@ class MarkdownGenerator:
             content.append("## Related Blocks")
             content.append("")
             for related in block['relatedBlocks']:
-                content.append(f"- [{related}](/blocks/{related.lower()})")
+                # Find the folder path for the related block
+                related_lower = related.lower()
+                if related_lower in self.block_path_map:
+                    related_path = self.block_path_map[related_lower]
+                    content.append(f"- [{related}](/blocks/{related_path}/{related_lower})")
+                else:
+                    # If path not found, still show the block but without link
+                    content.append(f"- {related} (link not available)")
             content.append("")
         
         # Tags
@@ -207,15 +215,25 @@ class MarkdownGenerator:
         
         # Footer
         content.append("---")
-        content.append("")
-        content.append(f"*Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
         
         return '\n'.join(content)
     
-    def create_category_index(self, category_name: str, folder_info: Dict, blocks: List[Dict]) -> str:
+    def create_category_index(self, category_name: str, folder_info: Dict, blocks: List[tuple], folder_path: str) -> str:
         """Create index page for a category."""
         content = []
         icon = folder_info.get('icon', '')
+        
+        # Header with metadata for Wiki.js
+        content.append("---")
+        content.append(f"title: {category_name}")
+        content.append(f"description: {category_name} blocks documentation")
+        content.append("published: true")
+        content.append(f"date: {datetime.now().strftime('%Y-%m-%dT%H:%M:%S.000Z')}")
+        content.append("tags: blocks, category")
+        content.append("editor: markdown")
+        content.append(f"dateCreated: {datetime.now().strftime('%Y-%m-%dT%H:%M:%S.000Z')}")
+        content.append("---")
+        content.append("")
         
         # Title
         title = f"{icon} {category_name} Blocks" if icon else f"{category_name} Blocks"
@@ -225,84 +243,190 @@ class MarkdownGenerator:
         content.append(f"This category contains **{len(blocks)}** blocks.")
         content.append("")
         
-        # Sort blocks
-        sorted_blocks = sorted(blocks, key=lambda x: x['name'].lower())
+        # Sort blocks by display name
+        sorted_blocks = sorted(blocks, key=lambda x: x[1].lower())
         
         # List blocks
         content.append("## Available Blocks")
         content.append("")
         
-        for block in sorted_blocks:
+        for block, display_name in sorted_blocks:
             desc = block.get('description', 'No description available')
             if len(desc) > 100:
                 desc = desc[:97] + "..."
-            content.append(f"- **[{block['name']}](./{block['name'].lower()}.md)** - {desc}")
+            # Link to blocks in the subfolder (e.g., /blocks/interfaces/button)
+            content.append(f"- **[{display_name}](./{folder_path}/{block['name'].lower()})** - {desc}")
         
         content.append("")
         content.append("---")
-        content.append(f"*Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
         
         return '\n'.join(content)
     
+    
     def create_main_index(self, folders: List[Dict], folder_blocks: Dict[str, List]) -> str:
-        """Create main blocks index."""
+        """Create main blocks index with table format."""
         content = []
         
-        content.append("# Blocks Documentation")
+        # Count total blocks
+        total_blocks = sum(len(blocks[2]) for blocks in folder_blocks.values())
+        
+        # Header with metadata for Wiki.js
+        content.append("---")
+        content.append("title: Blocks")
+        content.append("description: Comprehensive guide to all fundamental building blocks in PatchWorld")
+        content.append("published: true")
+        content.append(f"date: {datetime.now().strftime('%Y-%m-%dT%H:%M:%S.000Z')}")
+        content.append("tags: blocks, index, documentation")
+        content.append("editor: markdown")
+        content.append(f"dateCreated: {datetime.now().strftime('%Y-%m-%dT%H:%M:%S.000Z')}")
+        content.append("---")
         content.append("")
-        content.append("Welcome to the Blocks documentation! Blocks are the building components you use to create patches in PatchWorld.")
+        content.append("These are the fundamental building blocks available in PatchWorld. You can use these blocks to create patches, instruments, and interactive experiences.")
         content.append("")
-        content.append("## Block Categories")
+        content.append("💡 **Note:** Beyond these basic blocks, PatchWorld offers:")
+        content.append("- **Instruments & Devices** - Pre-built combinations of blocks for music and interaction")
+        content.append("- **Imported Assets** - Custom 3D models, sounds, and creations from the community")
+        content.append("- **Your Own Creations** - Save and share your patches as reusable devices")
+        content.append("")
+        content.append(f"**{total_blocks} blocks** available across **{len([f for f in folders if f['id'] != 'block-folder-decor'])}** categories")
+        content.append("")
+        content.append("---")
         content.append("")
         
-        # Process main folders (not including Decor parent)
+        # Core Building Blocks table
+        content.append("## 🎛️ Core Building Blocks")
+        content.append("")
+        content.append("| Category | Blocks | Description |")
+        content.append("|----------|--------|-------------|")
+        
+        # Define descriptions for each category
+        descriptions = {
+            "Interfaces": "User interaction and control elements",
+            "Controllers": "3D controllers and input devices",
+            "Audio": "Sound generation and processing",
+            "Visual": "Graphics, effects, and visual elements",
+            "Motion": "Physics and movement control",
+            "Logic": "Data flow and decision making",
+            "Connectors": "Linking and routing signals",
+            "Players": "Multiplayer and user management",
+            "System": "System-level controls and utilities"
+        }
+        
+        # Add non-decor folders to table
         for folder in folders:
             if folder['id'] != 'block-folder-decor':
                 folder_name = folder['name']
                 folder_path = folder_name.lower().replace(' ', '-')
                 icon = folder.get('icon', '')
-                block_count = folder.get('assetCount', 0)
+                # Always use actual count from folder_blocks
+                if folder_path in folder_blocks:
+                    block_count = len(folder_blocks[folder_path][2])
+                else:
+                    block_count = 0  # Don't show folders with no blocks
                 
-                content.append(f"### [{folder_name}](./blocks/{folder_path}/index.md) {icon}" if icon else f"### [{folder_name}](./blocks/{folder_path}/index.md)")
-                content.append(f"*{block_count} blocks*")
-                content.append("")
-            else:
-                # Process Decor children
-                content.append("### Decor")
-                content.append("")
-                for child in folder.get('children', []):
-                    child_name = child['name']
-                    child_path = f"decor/{child_name.lower().replace(' ', '-')}"
-                    icon = child.get('icon', '')
-                    block_count = child.get('assetCount', 0)
-                    
-                    content.append(f"- {icon} [{child_name}](./blocks/{child_path}/index.md) - *{block_count} items*")
-                content.append("")
+                desc = descriptions.get(folder_name, "")
+                content.append(f"| **[{folder_name}](/blocks/{folder_path})** {icon} | {block_count} | {desc} |")
         
+        
+        content.append("")
         content.append("---")
-        content.append(f"*Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
         
         return '\n'.join(content)
     
+    def clean_old_timestamps(self, dry_run: bool = False):
+        """Remove old timestamp lines from existing files."""
+        if dry_run:
+            return
+            
+        blocks_dir = self.output_dir / 'blocks'
+        if not blocks_dir.exists():
+            return
+            
+        print("[CLEANUP] Removing old timestamps from existing files...")
+        files_cleaned = 0
+        
+        # Clean all .md files recursively
+        for md_file in blocks_dir.rglob('*.md'):
+            try:
+                with open(md_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                lines = content.split('\n')
+                cleaned_lines = []
+                changed = False
+                
+                for line in lines:
+                    if line.startswith('*Last updated:'):
+                        changed = True
+                        continue  # Skip this line
+                    cleaned_lines.append(line)
+                
+                if changed:
+                    # Write back without timestamp
+                    with open(md_file, 'w', encoding='utf-8') as f:
+                        f.write('\n'.join(cleaned_lines))
+                    files_cleaned += 1
+                    
+            except Exception as e:
+                print(f"[WARNING] Could not clean {md_file}: {e}")
+        
+        # Also clean main blocks.md
+        main_blocks_file = self.output_dir / 'blocks.md'
+        if main_blocks_file.exists():
+            try:
+                with open(main_blocks_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                lines = content.split('\n')
+                cleaned_lines = []
+                changed = False
+                
+                for line in lines:
+                    if line.startswith('*Last updated:'):
+                        changed = True
+                        continue
+                    cleaned_lines.append(line)
+                
+                if changed:
+                    with open(main_blocks_file, 'w', encoding='utf-8') as f:
+                        f.write('\n'.join(cleaned_lines))
+                    files_cleaned += 1
+                    
+            except Exception as e:
+                print(f"[WARNING] Could not clean {main_blocks_file}: {e}")
+        
+        if files_cleaned > 0:
+            print(f"[CLEANUP] Cleaned timestamps from {files_cleaned} files")
+        else:
+            print("[CLEANUP] No old timestamps found")
+
     def clean_output_directory(self, dry_run: bool = False):
         """Clean the output directory before generating new files."""
-        blocks_dir = self.output_dir / 'blocks'
-        
-        if blocks_dir.exists():
-            if dry_run:
-                print(f"Would remove: {blocks_dir}")
-            else:
-                print(f"[CLEANUP] Cleaning existing blocks directory...")
-                shutil.rmtree(blocks_dir)
+        # Note: We now skip full cleanup to preserve timestamps for unchanged files
+        # Individual file updates will handle changes as needed
+        if not dry_run:
+            print(f"[INFO] Incremental update mode - preserving unchanged files")
+            
+            # Clean up old index.md files from previous structure
+            blocks_dir = self.output_dir / 'blocks'
+            if blocks_dir.exists():
+                for folder in blocks_dir.iterdir():
+                    if folder.is_dir():
+                        index_file = folder / 'index.md'
+                        if index_file.exists():
+                            print(f"[CLEANUP] Removing old index file: {index_file}")
+                            index_file.unlink()
     
-    def generate_markdown_files(self, dry_run: bool = False, limit: int = None):
+    def generate_markdown_files(self, dry_run: bool = False, limit: int = None, auto_commit: bool = False):
         """Generate all markdown files."""
         # Check git status first
         if not dry_run and not self.check_git_status():
             return
         
-        # Prompt for git pull
-        if not dry_run and not self.prompt_git_pull():
+        # Prompt for git pull (skip if auto-commit)
+        if not dry_run and auto_commit:
+            print("[INFO] Skipping git pull prompt in auto-commit mode")
+        elif not dry_run and not self.prompt_git_pull():
             return
         
         # Load data
@@ -311,31 +435,48 @@ class MarkdownGenerator:
         folders = self.load_folder_structure()
         
         # Create a map of block names to block data for quick lookup
-        blocks_by_name = {b['name'].lower(): b for b in blocks_data['blocks']}
+        blocks_by_name = {b['name']: b for b in blocks_data['blocks']}
         
         # Build list of blocks FROM the folder structure (not from blocks_data)
         blocks_to_process = []
         
         def collect_blocks_from_folders(folder_list, parent_path=""):
             for folder in folder_list:
+                # Skip decor folder and its children
+                if folder['id'] == 'block-folder-decor':
+                    continue
+                    
                 folder_name = folder['name'].lower().replace(' ', '-')
                 current_path = f"{parent_path}/{folder_name}" if parent_path else folder_name
                 
                 # Process blocks in this folder
                 for folder_block in folder.get('blocks', []):
-                    block_name = folder_block['name']
-                    # Find the full block data
-                    if block_name.lower() in blocks_by_name:
-                        block = blocks_by_name[block_name.lower()]
-                        # Add folder info to the block
-                        blocks_to_process.append({
-                            'block': block,
-                            'folder_path': current_path,
-                            'category': folder['name'],
-                            'folder_info': folder
-                        })
+                    # Use the block ID to find the block
+                    block_id = folder_block['id'].replace('block:', '')
+                    
+                    # Try to find by ID first, then by display name
+                    if block_id in blocks_by_name:
+                        block = blocks_by_name[block_id]
+                    elif folder_block['name'].lower() in blocks_by_name:
+                        block = blocks_by_name[folder_block['name'].lower()]
+                    else:
+                        # Block not found in blocks_data.json
+                        print(f"[WARNING] Block not found in blocks_data: {folder_block['name']} (ID: {block_id})")
+                        continue
+                    
+                    # Build path map for related blocks lookup
+                    self.block_path_map[block['name'].lower()] = current_path
+                    
+                    # Add folder info to the block
+                    blocks_to_process.append({
+                        'block': block,
+                        'folder_path': current_path,
+                        'category': folder['name'],
+                        'folder_info': folder,
+                        'display_name': folder_block['name']  # Add display name from folder structure
+                    })
                 
-                # Process children folders
+                # Process children folders (won't include decor children now)
                 if 'children' in folder and folder['children']:
                     collect_blocks_from_folders(folder['children'], current_path)
         
@@ -365,10 +506,12 @@ class MarkdownGenerator:
             
             block_name = block['name']
             
-            # Track for category pages
+            # Track for category pages with display name
             if folder_path not in folder_blocks:
                 folder_blocks[folder_path] = (category, folder_info, [])
-            folder_blocks[folder_path][2].append(block)
+            # Store both block and display name
+            display_name = block_data.get('display_name', block['name'])
+            folder_blocks[folder_path][2].append((block, display_name))
             
             # Create file path
             file_path = self.output_dir / 'blocks' / folder_path / f"{block_name.lower()}.md"
@@ -381,7 +524,8 @@ class MarkdownGenerator:
                 file_path.parent.mkdir(parents=True, exist_ok=True)
                 
                 # Generate content
-                content = self.create_block_content(block, category, folder_info)
+                display_name = block_data.get('display_name', block['name'])
+                content = self.create_block_content(block, category, folder_info, display_name)
                 
                 # Write file
                 with open(file_path, 'w', encoding='utf-8') as f:
@@ -389,26 +533,27 @@ class MarkdownGenerator:
                 
                 created_files.append(str(file_path))
         
-        # Create category index pages
+        # Create category index pages directly at /blocks/category.md (Wiki.js native structure)
         for folder_path, (category, folder_info, blocks) in folder_blocks.items():
-            index_path = self.output_dir / 'blocks' / folder_path / 'index.md'
+            # Create category page directly at /blocks/interfaces.md instead of /blocks/interfaces/index.md
+            category_page_path = self.output_dir / 'blocks' / f"{folder_path}.md"
             
             if dry_run:
-                print(f"Would create: {index_path}")
+                print(f"Would create: {category_page_path}")
             else:
-                index_path.parent.mkdir(parents=True, exist_ok=True)
-                content = self.create_category_index(category, folder_info, blocks)
+                content = self.create_category_index(category, folder_info, blocks, folder_path)
                 
-                with open(index_path, 'w', encoding='utf-8') as f:
+                with open(category_page_path, 'w', encoding='utf-8') as f:
                     f.write(content)
         
-        # Create main index
-        main_index_path = self.output_dir / 'index.md'
+        # Create main blocks.md
+        main_index_path = self.output_dir / 'blocks.md'
         
         if dry_run:
             print(f"Would create: {main_index_path}")
         else:
             content = self.create_main_index(folders, folder_blocks)
+            
             with open(main_index_path, 'w', encoding='utf-8') as f:
                 f.write(content)
         
@@ -418,10 +563,69 @@ class MarkdownGenerator:
         
         if not dry_run:
             print("\n[NEXT STEPS]:")
-            print("1. Review the generated files")
-            print("2. Commit changes: git add . && git commit -m 'Update block documentation'")
-            print("3. Push to GitHub: git push")
-            print("4. Wiki.js will automatically sync the changes")
+            
+            # Ask if user wants to commit and push (unless auto-commit is enabled)
+            if auto_commit:
+                response = 'y'
+            else:
+                response = input("\nDo you want to commit and push changes now? (Y/n): ")
+            
+            if not response or response.lower().startswith('y'):
+                print("\n[GIT] Adding files...")
+                add_result = subprocess.run(
+                    ['git', 'add', '.'],
+                    cwd=self.output_dir,
+                    capture_output=True,
+                    text=True
+                )
+                
+                if add_result.returncode != 0:
+                    print(f"[ERROR] Git add failed: {add_result.stderr}")
+                    return
+                
+                # Commit with timestamp
+                commit_msg = f"Update block documentation - {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+                print(f"[GIT] Committing: {commit_msg}")
+                
+                commit_result = subprocess.run(
+                    ['git', 'commit', '-m', commit_msg],
+                    cwd=self.output_dir,
+                    capture_output=True,
+                    text=True
+                )
+                
+                if commit_result.returncode != 0:
+                    if 'nothing to commit' in commit_result.stdout:
+                        print("[INFO] No changes to commit")
+                        return
+                    else:
+                        print(f"[ERROR] Git commit failed: {commit_result.stderr}")
+                        return
+                else:
+                    print(f"[SUCCESS] {commit_result.stdout.strip()}")
+                
+                # Push
+                print("[GIT] Pushing to remote...")
+                push_result = subprocess.run(
+                    ['git', 'push'],
+                    cwd=self.output_dir,
+                    capture_output=True,
+                    text=True
+                )
+                
+                if push_result.returncode != 0:
+                    print(f"[ERROR] Git push failed: {push_result.stderr}")
+                    print("You can manually push later with: git push")
+                else:
+                    print("[SUCCESS] Pushed to remote!")
+                    print("[INFO] Wiki.js will automatically sync the changes")
+            else:
+                print("\n[INFO] Skipping git operations")
+                print("To commit later:")
+                print(f"  cd {self.output_dir}")
+                print("  git add .")
+                print("  git commit -m 'Update block documentation'")
+                print("  git push")
 
 def main():
     parser = argparse.ArgumentParser(description='Generate markdown files for Wiki.js git sync')
@@ -433,6 +637,8 @@ def main():
                        help='Show what would be done without creating files')
     parser.add_argument('--limit', '-l', type=int, 
                        help='Limit number of blocks to process (for testing)')
+    parser.add_argument('--auto-commit', '-a', action='store_true',
+                       help='Automatically commit and push without prompting')
     
     args = parser.parse_args()
     
@@ -444,7 +650,7 @@ def main():
         generator.config['block_folders_path'] = 'C:\\Users\\mcbub\\NewPatch\\Assets\\StreamingAssets\\block_folders.json'
     
     try:
-        generator.generate_markdown_files(dry_run=args.dry_run, limit=args.limit)
+        generator.generate_markdown_files(dry_run=args.dry_run, limit=args.limit, auto_commit=args.auto_commit)
     except KeyboardInterrupt:
         print("\nOperation cancelled by user")
         sys.exit(1)
