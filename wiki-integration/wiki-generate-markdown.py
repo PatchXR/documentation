@@ -79,13 +79,39 @@ class MarkdownGenerator:
         return True
     
     def load_blocks_data(self) -> Dict:
-        """Load block data from the documentation project."""
-        if not self.blocks_data_path.exists():
-            print(f"[ERROR] Blocks data file not found: {self.blocks_data_path}")
-            sys.exit(1)
-            
-        with open(self.blocks_data_path, 'r') as f:
-            return json.load(f)
+        """Load blocks data directly from individual JSON files."""
+        # Try to read from Assets/Blocks first (development source)
+        blocks_path = Path(self.config.get('blocks_source_path', '../NewPatch/Assets/Blocks'))
+        
+        if not blocks_path.exists():
+            # Fallback to old method
+            print("[WARNING] Assets/Blocks not found, falling back to blocks_data.json")
+            if not self.blocks_data_path.exists():
+                print(f"[ERROR] Blocks data file not found: {self.blocks_data_path}")
+                sys.exit(1)
+            with open(self.blocks_data_path, 'r') as f:
+                return json.load(f)
+        
+        print(f"[INFO] Reading blocks directly from: {blocks_path}")
+        blocks = []
+        
+        # Walk through all subdirectories to find block JSON files
+        for json_file in blocks_path.rglob('*.json'):
+            # Skip meta files and other non-block files
+            if json_file.name.endswith('.meta') or json_file.parent == blocks_path:
+                continue
+                
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    block_data = json.load(f)
+                    # Add the file path for debugging
+                    block_data['_source_file'] = str(json_file)
+                    blocks.append(block_data)
+            except Exception as e:
+                print(f"[WARNING] Failed to read {json_file}: {e}")
+        
+        print(f"[INFO] Loaded {len(blocks)} blocks from individual JSON files")
+        return {"blocks": blocks}
     
     def load_folder_structure(self) -> List[Dict]:
         """Load the new folder structure from block_folders.json."""

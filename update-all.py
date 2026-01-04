@@ -79,6 +79,8 @@ def main():
     
     # Step 1: Extract blocks from NewPatch to Documentation
     print("\n📖 STEP 1: NewPatch → Documentation")
+    print("Note: Wiki now reads directly from Assets/Blocks, so this step is optional for wiki updates")
+    print("but still required for portal and RST documentation.")
     if not run_command(
         ['python', 'build_rst_from_blocks_json.py', '--verbose'],
         "Extracting blocks from NewPatch",
