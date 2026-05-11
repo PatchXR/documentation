@@ -20,10 +20,24 @@ class MarkdownGenerator:
     def __init__(self, config_path: str, output_dir: str):
         """Initialize the markdown generator."""
         self.config = self.load_config(config_path)
-        self.output_dir = Path(output_dir)
-        self.blocks_data_path = Path(self.config['blocks_data_path'])
-        self.block_folders_path = Path(self.config.get('block_folders_path', 
-                                      'C:\\Users\\mcbub\\NewPatch\\Assets\\StreamingAssets\\block_folders.json'))
+        
+        # Priority for output directory: 1. CLI arg (if not default), 2. Config, 3. Default CLI arg
+        if output_dir and 'mcbub' not in output_dir: # User provided a real path via CLI
+            self.output_dir = Path(output_dir)
+        elif self.config.get('wiki_repo_path'):
+            self.output_dir = Path(self.config['wiki_repo_path'])
+        else:
+            self.output_dir = Path(output_dir)
+
+        # Fallback logic for blocks_data_path
+        self.blocks_data_path = Path(self.config.get('blocks_data_path', '../source/blocks_data.json'))
+        
+        # Fallback logic for block_folders_path
+        default_folders_path = '../../NewPatch/Assets/StreamingAssets/block_folders.json'
+        if not os.path.exists(default_folders_path):
+            default_folders_path = '../../Patch2025/Assets/StreamingAssets/block_folders.json'
+            
+        self.block_folders_path = Path(self.config.get('block_folders_path', default_folders_path))
         self.block_path_map = {}  # Map block names to their folder paths
         
     def load_config(self, config_path: str) -> Dict:
@@ -81,7 +95,11 @@ class MarkdownGenerator:
     def load_blocks_data(self) -> Dict:
         """Load blocks data directly from individual JSON files."""
         # Try to read from Assets/Blocks first (development source)
-        blocks_path = Path(self.config.get('blocks_source_path', '../NewPatch/Assets/Blocks'))
+        blocks_path = Path(self.config.get('blocks_source_path', '../../NewPatch/Assets/Blocks'))
+        if not blocks_path.exists() and 'NewPatch' in str(blocks_path):
+            alt_path = Path(str(blocks_path).replace('NewPatch', 'Patch2025'))
+            if alt_path.exists():
+                blocks_path = alt_path
         
         if not blocks_path.exists():
             # Fallback to old method
@@ -657,7 +675,7 @@ def main():
     parser = argparse.ArgumentParser(description='Generate markdown files for Wiki.js git sync')
     parser.add_argument('--config', '-c', default='wiki-config.json', 
                        help='Configuration file path')
-    parser.add_argument('--output', '-o', default='C:\\Users\\mcbub\\block-docs',
+    parser.add_argument('--output', '-o', default='../../block-docs',
                        help='Output directory (git repo)')
     parser.add_argument('--dry-run', '-d', action='store_true', 
                        help='Show what would be done without creating files')
@@ -670,10 +688,6 @@ def main():
     
     # Create generator
     generator = MarkdownGenerator(args.config, args.output)
-    
-    # Add block_folders_path to config if not present
-    if 'block_folders_path' not in generator.config:
-        generator.config['block_folders_path'] = 'C:\\Users\\mcbub\\NewPatch\\Assets\\StreamingAssets\\block_folders.json'
     
     try:
         generator.generate_markdown_files(dry_run=args.dry_run, limit=args.limit, auto_commit=args.auto_commit)

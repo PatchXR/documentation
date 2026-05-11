@@ -69,21 +69,36 @@ def main():
     print("=" * 50)
     
     # Check if we're in the right directory
-    if not os.path.exists('../NewPatch/Assets/Blocks'):
-        print("❌ Error: NewPatch repository not found!")
+    unity_project_path = '../NewPatch'
+    if not os.path.exists(unity_project_path):
+        unity_project_path = '../Patch2025'
+        
+    if not os.path.exists(os.path.join(unity_project_path, 'Assets/Blocks')):
+        print(f"❌ Error: Unity repository (NewPatch or Patch2025) not found at {unity_project_path}!")
         print("Please make sure this script is run from the documentation folder")
-        print("and that NewPatch folder is at ../NewPatch/")
+        print("and that your Unity project folder is side-by-side with this one.")
         sys.exit(1)
+    
+    # Load config if available
+    config = {}
+    config_path = 'wiki-integration/wiki-config.json'
+    if os.path.exists(config_path):
+        try:
+            with open(config_path, 'r') as f:
+                import json
+                config = json.load(f)
+        except Exception:
+            pass
     
     success = True
     
-    # Step 1: Extract blocks from NewPatch to Documentation
-    print("\n📖 STEP 1: NewPatch → Documentation")
+    # Step 1: Extract blocks from Unity Project to Documentation
+    print(f"\n📖 STEP 1: {os.path.basename(unity_project_path)} → Documentation")
     print("Note: Wiki now reads directly from Assets/Blocks, so this step is optional for wiki updates")
     print("but still required for portal and RST documentation.")
     if not run_command(
         ['python', 'build_rst_from_blocks_json.py', '--verbose'],
-        "Extracting blocks from NewPatch",
+        f"Extracting blocks from {os.path.basename(unity_project_path)}",
         cwd='.'
     ):
         success = False
@@ -145,11 +160,17 @@ def main():
             else:
                 # Git sync method (default)
                 print("\n📝 Using Git sync method...")
-                # Default to block-docs in user home directory
-                default_repo_path = os.path.expanduser("~/block-docs").replace("\\", "/")
-                # For Windows, also try the explicit path
-                if not os.path.exists(default_repo_path):
-                    default_repo_path = "C:/Users/mcbub/block-docs"
+                # Try to get path from config first
+                default_repo_path = config.get('wiki_repo_path')
+                
+                # Fallback to defaults
+                if not default_repo_path or not os.path.exists(default_repo_path):
+                    default_repo_path = os.path.expanduser("~/block-docs").replace("\\", "/")
+                    # For Windows, also try the explicit path
+                    if not os.path.exists(default_repo_path):
+                        default_repo_path = "../../block-docs" # Try relative path
+                    if not os.path.exists(default_repo_path):
+                        default_repo_path = "C:/Users/mcbub/block-docs"
                 
                 if os.path.exists(default_repo_path):
                     print(f"Using default repo path: {default_repo_path}")

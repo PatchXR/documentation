@@ -16,7 +16,32 @@ parser.add_argument('--verbose', '-v', help='Print info to the terminal while ru
 # Parse the command line args
 args = parser.parse_args()
 
+# Attempt to load config for overrides
+config = {}
+config_path = 'wiki-integration/wiki-config.json'
+if os.path.exists(config_path):
+    try:
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+    except Exception:
+        pass
+
+# Determine blocks folder with fallback logic
 blocksFolder = args.path
+if not os.path.exists(blocksFolder):
+    # Try config override
+    if config.get('blocks_source_path'):
+        blocksFolder = config['blocks_source_path']
+    # Try alternative folder name (Patch2025 vs NewPatch)
+    elif 'NewPatch' in blocksFolder:
+        alt_path = blocksFolder.replace('NewPatch', 'Patch2025')
+        if os.path.exists(alt_path):
+            blocksFolder = alt_path
+    elif 'Patch2025' in blocksFolder:
+        alt_path = blocksFolder.replace('Patch2025', 'NewPatch')
+        if os.path.exists(alt_path):
+            blocksFolder = alt_path
+
 verbose = args.verbose
 
 if verbose:
@@ -24,7 +49,7 @@ if verbose:
 
 # Check if the given path exists
 if not os.path.exists(blocksFolder):
-    print(f'Error: the given path to the Blocks folder ({blocksFolder}) could not be found. \n\nPlease check if the documentation and NewPatch repositories reside in the same folder. Alternatively, supply the correct path using the --path PATH command line option.')
+    print(f'Error: the given path to the Blocks folder ({blocksFolder}) could not be found. \n\nPlease check if the documentation and Unity repositories (NewPatch or Patch2025) reside in the same folder. Alternatively, supply the correct path using the --path PATH command line option.')
 
 if verbose:
     print('Cleaning the Blocks folder')
@@ -56,6 +81,12 @@ for root, dirs, files in os.walk('source/Blocks'):
 
 # Add these constants near the top of the file
 THUMBNAILS_SOURCE = '../NewPatch/Assets/StreamingAssets/Thumbnails/Blocks'
+if config.get('thumbnails_path'):
+    THUMBNAILS_SOURCE = config['thumbnails_path']
+elif not os.path.exists(THUMBNAILS_SOURCE):
+    alt_thumbnails = THUMBNAILS_SOURCE.replace('NewPatch', 'Patch2025')
+    if os.path.exists(alt_thumbnails):
+        THUMBNAILS_SOURCE = alt_thumbnails
 THUMBNAILS_DEST = 'source/_static/block-thumbnails'
 
 # Create thumbnails destination directory if it doesn't exist
