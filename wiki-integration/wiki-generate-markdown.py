@@ -436,7 +436,7 @@ class MarkdownGenerator:
         
         # Add non-decor folders to table
         for folder in folders:
-            if folder['id'] != 'block-folder-decor':
+            if folder['id'] != 'block-folder-decor' and folder['name'] != "Extensions":
                 folder_name = folder['name']
                 folder_path = folder_name.lower().replace(' ', '-')
                 icon = folder.get('icon', '')
@@ -604,6 +604,34 @@ class MarkdownGenerator:
         
         # Collect all blocks from the folder structure
         collect_blocks_from_folders(folders)
+        
+        # Add ALL blocks with "Extensions" category, regardless of menu or flags
+        processed_block_names = {b['block']['name'].lower() for b in blocks_to_process}
+        extensions_info = {
+            "id": "block-folder-extensions",
+            "name": "Extensions",
+            "icon": "🧩"
+        }
+        
+        extensions_added = False
+        for block in blocks_data['blocks']:
+            b_name = block['name'].lower()
+            if b_name not in processed_block_names:
+                if "Extensions" in block.get('categories', []):
+                    current_path = "extensions"
+                    self.block_path_map[b_name] = current_path
+                    
+                    blocks_to_process.append({
+                        'block': block,
+                        'folder_path': current_path,
+                        'category': "Extensions",
+                        'folder_info': extensions_info,
+                        'display_name': block.get('displayName', block['name'])
+                    })
+                    extensions_added = True
+                    
+        if extensions_added and not any(f['name'] == 'Extensions' for f in folders):
+            folders.append(extensions_info)
         
         if limit:
             blocks_to_process = blocks_to_process[:limit]
