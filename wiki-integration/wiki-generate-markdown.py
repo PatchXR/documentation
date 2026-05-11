@@ -39,6 +39,29 @@ class MarkdownGenerator:
             
         self.block_folders_path = Path(self.config.get('block_folders_path', default_folders_path))
         self.block_path_map = {}  # Map block names to their folder paths
+        self.wiki_page_map = self.build_wiki_page_map() # Map wiki page names to their paths
+        
+    def build_wiki_page_map(self) -> Dict[str, str]:
+        """Build a map of wiki page names to their paths by scanning the output directory."""
+        page_map = {}
+        if not self.output_dir.exists():
+            return page_map
+            
+        # Scan for all .md files in the wiki repo
+        for md_file in self.output_dir.rglob('*.md'):
+            # Skip the output root itself if it's an index
+            if md_file.parent == self.output_dir and md_file.stem == 'index':
+                continue
+                
+            # Get path relative to output_dir and remove .md
+            try:
+                rel_path = md_file.relative_to(self.output_dir)
+                # Wiki path format is /folder/subfolder/name
+                wiki_path = '/' + str(rel_path.with_suffix('')).replace('\\', '/')
+                page_map[md_file.stem.lower()] = wiki_path
+            except Exception:
+                continue
+        return page_map
         
     def load_config(self, config_path: str) -> Dict:
         """Load configuration from JSON file."""
@@ -224,15 +247,69 @@ class MarkdownGenerator:
             content.append(block['longDescription'])
             content.append("")
         
-        # Parts (inputs/outputs)
-        if block.get('parts'):
-            content.append("## Inputs, Outputs and Parts")
+        # Related Wiki Pages
+        if block.get('relatedWikiPages'):
+            content.append("## Related Wiki Pages")
             content.append("")
+            links = []
+            for page_name in block['relatedWikiPages']:
+                page_lower = page_name.lower()
+                if page_lower in self.wiki_page_map:
+                    links.append(f"[{page_name}]({self.wiki_page_map[page_lower]})")
+                else:
+                    links.append(page_name)
+            content.append(" • ".join(links))
+            content.append("")
+
+        # Parts (inputs/outputs) categorized into 3 sections
+        if block.get('parts'):
+            inputs = []
+            outputs = []
+            others = []
+            
             for part in block['parts']:
-                part_type = part.get('type', '')
-                type_str = f" *({part_type})*" if part_type else ""
-                part_desc = part.get('description', '')
-                content.append(f"**{part['name']}**{type_str}: {part_desc}")
+                p_type = part.get('type', '').lower()
+                if 'input' in p_type:
+                    inputs.append(part)
+                elif 'output' in p_type:
+                    outputs.append(part)
+                else:
+                    others.append(part)
+            
+            def add_parts_table(title, parts_list):
+                if not parts_list:
+                    return
+                content.append(f"### {title}")
+                content.append("")
+                content.append("| Name | Type | Description |")
+                content.append("|------|------|-------------|")
+                for part in parts_list:
+                    name = part.get('name', 'Unnamed')
+                    p_type = part.get('type', '')
+                    desc = part.get('description', '').replace('\n', ' ')
+                    content.append(f"| {name} | {p_type} | {desc} |")
+                content.append("")
+
+            if inputs or outputs or others:
+                content.append("## Inputs, Outputs and Parts")
+                content.append("")
+                add_parts_table("Inputs", inputs)
+                add_parts_table("Outputs", outputs)
+                add_parts_table("Others", others)
+
+        # Inspector Controls
+        if block.get('inspectorControls'):
+            controls = [c for c in block['inspectorControls'] if c.get('type') != 'text_line']
+            if controls:
+                content.append("## Inspector Controls")
+                content.append("")
+                content.append("| Name | Type | Description |")
+                content.append("|------|------|-------------|")
+                for control in controls:
+                    name = control.get('name', 'Unnamed')
+                    p_type = control.get('type', '')
+                    desc = control.get('description', '').replace('\n', ' ')
+                    content.append(f"| {name} | {p_type} | {desc} |")
                 content.append("")
         
         # Related blocks
@@ -353,7 +430,8 @@ class MarkdownGenerator:
             "Logic": "Data flow and decision making",
             "Connectors": "Linking and routing signals",
             "Players": "Multiplayer and user management",
-            "System": "System-level controls and utilities"
+            "System": "System-level controls and utilities",
+            "Extensions": "Extends features of some blocks"
         }
         
         # Add non-decor folders to table

@@ -393,7 +393,7 @@ class SimpleWikiPopulator:
         
         # Sort categories to match portal order
         category_order = [
-            "Interfaces", "Audio", "Visuals", "Motion", "Logic", "Player", "System"
+            "Interfaces", "Audio", "Visuals", "Motion", "Logic", "Player", "System", "Extensions"
         ]
         
         # First show ordered categories
